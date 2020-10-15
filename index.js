@@ -9,11 +9,21 @@ const init = async () => {
         host: 'localhost'
     });
 
+    await server.register(require('@hapi/vision'));
+
+    server.views({
+        engines: {
+            html: require('handlebars')
+        },
+        relativeTo: __dirname,
+        path: 'templates'
+    });
+
     server.route({
         method: 'GET',
         path: '/',
         handler: (request, h) => {
-            return "Hello world";
+            return h.view("index", { title: 'tango2' });
         }
     });
 
