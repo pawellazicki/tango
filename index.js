@@ -4,8 +4,13 @@ const Hapi = require('@hapi/hapi');
 
 const init = async () => {
 
+    const data = [
+        { id: 1, name: 'Alex', age: 21 },
+        { id: 2, name: 'Alice', age: 23 }
+    ];
+
     const server = Hapi.server({
-        port: 3000,
+        port: 3001,
         host: 'localhost'
     });
 
@@ -26,6 +31,15 @@ const init = async () => {
             return h.view("index", { title: 'tango2' });
         }
     });
+
+    server.route({
+        method: 'GET',
+        path: '/mock',
+        handler: (request, h) => {
+            return { data };
+        }
+    });
+
 
     await server.start();
     console.log('Server running on %s', server.info.uri);
