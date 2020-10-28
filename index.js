@@ -12,11 +12,6 @@ const init = async () => {
         database: 'world'
     });
 
-    const data = [
-        { id: 1, name: 'Alex', age: 21 },
-        { id: 2, name: 'Alice', age: 23 }
-    ];
-
     const server = Hapi.server({
         port: 3001,
         host: 'localhost'
@@ -52,17 +47,14 @@ const init = async () => {
 
     function getFirstCity() {
         return new Promise((resolve, reject) => {
-          connection.query('SELECT * FROM city', [], function (err, results) {
-            if (err) {
-              return reject(error)
-            }
-
-            console.log(results[0]);
-      
-            return resolve(results[0]);
-          })
+            connection.query('SELECT * FROM city', [], function (err, results) {
+                if (err) {
+                    return reject(error)
+                }
+                return resolve(results[0]);
+            })
         })
-      }
+    }
 
     server.route({
         method: 'GET',
@@ -70,7 +62,7 @@ const init = async () => {
         handler: async (request, h) => {
             // maybe add some error handling here
             return await getFirstCity();
-          }
+        }
     });
 
 
