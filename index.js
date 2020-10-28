@@ -1,8 +1,16 @@
 'use strict';
 
 const Hapi = require('@hapi/hapi');
+const MySQL = require('mysql');
 
 const init = async () => {
+
+    const connection = MySQL.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'world'
+    });
 
     const data = [
         { id: 1, name: 'Alex', age: 21 },
@@ -15,6 +23,8 @@ const init = async () => {
     });
 
     await server.register(require('@hapi/vision'));
+
+    connection.connect();
 
     server.views({
         engines: {
@@ -38,6 +48,29 @@ const init = async () => {
         handler: (request, h) => {
             return { data };
         }
+    });
+
+    function getFirstCity() {
+        return new Promise((resolve, reject) => {
+          connection.query('SELECT * FROM city', [], function (err, results) {
+            if (err) {
+              return reject(error)
+            }
+
+            console.log(results[0]);
+      
+            return resolve(results[0]);
+          })
+        })
+      }
+
+    server.route({
+        method: 'GET',
+        path: '/city',
+        handler: async (request, h) => {
+            // maybe add some error handling here
+            return await getFirstCity();
+          }
     });
 
 
