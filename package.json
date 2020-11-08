@@ -13,7 +13,6 @@
     "@hapi/jwt": "^2.0.1",
     "@hapi/vision": "^6.0.1",
     "handlebars": "^4.7.6",
-    "hapi-auth-jwt2": "github:salzhrani/hapi-auth-jwt2",
     "joy": "^0.1.1",
     "mysql": "^2.13.0"
   }
