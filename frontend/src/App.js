@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Board from "./Board";
+import NavBar from './NavBar';
 
 class App extends Component {
   state = {
@@ -24,7 +26,22 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
+        <NavBar/>
+        <div className="tabs-container">
+          <h2 className="myBoards">My Boards</h2>
+          <div className="tabs">
+            <Board title="tablica" team="tango"></Board>
+            <Board title="tablica" team="tango"></Board>
+            <Board title="tablica" team="tango"></Board>
+            <Board title="tablica" team="tango"></Board>
+            <Board title="tablica" team="tango"></Board>
+            <Board title="tablica" team="tango"></Board>
+            <Board title="tablica" team="tango"></Board>
+            <Board title="tablica" team="tango"></Board>
+            <Board title="tablica" team="tango"></Board>
+          </div>
+        </div>
+        {/* <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1>Data from the Backend</h1>
           {this.state.data.map(city => (
@@ -35,7 +52,7 @@ class App extends Component {
               Population: {city.Population} <br />
             </p>
           ))}
-        </header>
+        </header> */}
       </div>
     );
   }

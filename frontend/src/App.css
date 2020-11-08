@@ -1,4 +1,58 @@
-.App {
+.App{
+  height: 100vh;
+  background-color: #282c34;
+}
+
+.tabs-container{
+  margin: 0 auto 0 auto;
+  max-width: 800px;
+}
+
+.tabs{
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-gap: 20px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.board{
+  height: 100px;
+  min-width: 120px;
+  background-color: beige;
+  border-radius: 30px;
+  padding: 10px 0 0 15px;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.topnav{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+
+.right {
+  float: right;
+}
+
+.myBoards{
+  color: white;
+  padding: 14px 30px;
+}
+
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +89,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
