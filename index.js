@@ -1,10 +1,16 @@
 'use strict';
-
 const Hapi = require('@hapi/hapi');
 const { Exception } = require('handlebars');
 const MySQL = require('mysql');
 
+const routes = require('./app/router/index.js');
+
 const init = async () => {
+
+    const server = Hapi.server({
+        port: 3001,
+        host: 'localhost'
+    });
 
     const connection = MySQL.createConnection({
         host: 'localhost',
@@ -13,10 +19,8 @@ const init = async () => {
         database: 'trello'
     });
 
-    const server = Hapi.server({
-        port: 3001,
-        host: 'localhost'
-    });
+    await connection.connect();
+    server.decorate('request', 'getDatabase', () => { return connection; });
 
     await server.register(require('@hapi/vision'));
 
