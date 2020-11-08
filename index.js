@@ -24,6 +24,7 @@ const init = async () => {
 
     await server.register(require('@hapi/vision'));
 
+<<<<<<< HEAD
     connection.connect();
 
     server.views({
@@ -69,6 +70,9 @@ const init = async () => {
             return await getBoards();
         }
     });
+=======
+    server.route(routes);
+>>>>>>> refactor
 
     await server.start();
     console.log('Server running on %s', server.info.uri);
