@@ -1,8 +1,11 @@
 'use strict';
 const Hapi = require('@hapi/hapi');
+<<<<<<< HEAD
 const { Exception } = require('handlebars');
+=======
+const Jwt = require('@hapi/jwt');
+>>>>>>> jwt auth
 const MySQL = require('mysql');
-
 const routes = require('./app/router/index.js');
 
 const init = async () => {
@@ -22,7 +25,31 @@ const init = async () => {
     await connection.connect();
     server.decorate('request', 'getDatabase', () => { return connection; });
 
-    await server.register(require('@hapi/vision'));
+    await server.register(Jwt);
+
+    server.auth.strategy('jwt_trello_strategy', 'jwt', {
+        keys: {
+            key: 'https://dev-adpf9l5z.eu.auth0.com/.well-known/jwks.json',
+            algorithms: ['RS256']
+        },
+        verify: {
+            aud: 'http://trellotango2.com',
+            iss: 'https://dev-adpf9l5z.eu.auth0.com/',
+            sub: false,
+            nbf: true,
+            exp: true,
+            maxAgeSec: 14400, // 4 hours
+            timeSkewSec: 15
+        },
+        validate: (artifacts, request, h) => {
+
+            return {
+                isValid: true,
+                credentials: { user: artifacts.decoded.payload.user }
+            };
+        }
+    });
+    server.auth.default('jwt_trello_strategy');
 
 <<<<<<< HEAD
     connection.connect();
