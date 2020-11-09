@@ -1,10 +1,11 @@
 import React from 'react'
-import '../App.css';
+import '../styles/App.css';
+import LoginForm from "../components/loginForm.component"
 
 export default function Login() {
     return (
         <div>
-            <h2>Login page</h2>
+            <LoginForm/>
         </div>
     )
 }
