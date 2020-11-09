@@ -1,45 +1,28 @@
 import React, { Component } from 'react';
 import './App.css';
-import Board from "./Board";
-import NavBar from './NavBar';
+import NavBar from './components/NavBar.component';
+import Boards from './containers/boards.container'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import Login from './containers/login.container';
+import Register from './containers/register.container';
 
 class App extends Component {
-  state = {
-    data: []
-  };
-
-  componentDidMount() {
-    this.fetchData()
-      .then(res => this.setState({
-        data: [res]
-      }))
-      .catch(err => console.log(err));
-  }
-
-  fetchData = async () => {
-    const response = await fetch('/city');
-    const body = response.json();
-    return body;
-  };
 
   render() {
     return (
       <div className="App">
-        <NavBar />
-        <div className="tabs-container">
-          <h2 className="myBoards">My Boards</h2>
-          <div className="tabs">
-            <Board title="tablica" team="tango"></Board>
-            <Board title="tablica" team="tango"></Board>
-            <Board title="tablica" team="tango"></Board>
-            <Board title="tablica" team="tango"></Board>
-            <Board title="tablica" team="tango"></Board>
-            <Board title="tablica" team="tango"></Board>
-            <Board title="tablica" team="tango"></Board>
-            <Board title="tablica" team="tango"></Board>
-            <Board title="tablica" team="tango"></Board>
-          </div>
-        </div>
+        <Router>
+          <NavBar />
+          <Switch>
+            <Route exact path='/' component={Boards} />
+            <Route path='/login' component={Login} />
+            <Route path='/register' component={Register} />
+          </Switch>
+        </Router>
       </div>
     );
   }
