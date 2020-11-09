@@ -9,7 +9,7 @@ const init = async () => {
         host: 'localhost',
         user: 'root',
         password: 'root',
-        database: 'world'
+        database: 'trello'
     });
 
     const server = Hapi.server({
@@ -45,23 +45,23 @@ const init = async () => {
         }
     });
 
-    function getFirstCity() {
+    function getBoards() {
         return new Promise((resolve, reject) => {
-            connection.query('SELECT * FROM city', [], function (err, results) {
+            connection.query('SELECT * FROM board', [], function (err, results) {
                 if (err) {
                     return reject(error)
                 }
-                return resolve(results[0]);
+                return resolve(results);
             })
         })
     }
 
     server.route({
         method: 'GET',
-        path: '/city',
+        path: '/boards',
         handler: async (request, h) => {
             // maybe add some error handling here
-            return await getFirstCity();
+            return await getBoards();
         }
     });
 
