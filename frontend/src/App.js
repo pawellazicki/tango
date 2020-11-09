@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Board from "./Board";
 import NavBar from './NavBar';
@@ -26,7 +25,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar/>
+        <NavBar />
         <div className="tabs-container">
           <h2 className="myBoards">My Boards</h2>
           <div className="tabs">
@@ -41,18 +40,6 @@ class App extends Component {
             <Board title="tablica" team="tango"></Board>
           </div>
         </div>
-        {/* <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1>Data from the Backend</h1>
-          {this.state.data.map(city => (
-            <p key={city.ID}>
-              Name: {city.Name} <br />
-              CountryCode: {city.CountryCode} <br />
-              District: {city.District} <br />
-              Population: {city.Population} <br />
-            </p>
-          ))}
-        </header> */}
       </div>
     );
   }
