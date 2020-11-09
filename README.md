@@ -2,10 +2,10 @@
 
 Wymagany node w wersji minimum 12
 
-,,,
+```
 npm install
 node index.js
-,,,
+```
 
 http://localhost:3000
 
@@ -20,14 +20,14 @@ W naszym przypadku hasło 'root'
 
 Po instalacji otwieramy Workbench i wykonujemy poniższy skrypt, aby HAPI miało dostęp do sql
 
-,,,
+```
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'
 flush privileges;
-,,,
+```
 
 ## Dodawanie tablic
 
-,,,
+```
 create database trello
 create table board (
 	id int not null auto_increment,
@@ -39,4 +39,4 @@ create table board (
 insert into board (title, team_name) values
 	('web app', 'tango'), ('mobile app', 'delta'),
     ('calculator', 'best team');
-,,,
+```
