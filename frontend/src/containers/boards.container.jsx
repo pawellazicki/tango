@@ -20,8 +20,6 @@ export default function Boards() {
         <div className="tabs-container">
             <h2 className="myBoards">My Boards</h2>
             <div className="tabs">
-                {console.log(loading)}
-                {console.log(data)}
                 {
                 loading ? <Loading/> : data.map(board => (
                     <Board key={board.id} title={board.title} team={board.team_name}></Board>
