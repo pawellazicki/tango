@@ -1,5 +1,5 @@
 import React from 'react';
-import '../App.css';
+import './Board.component.css';
 
 function Board({ title, team }) {
     return (

@@ -1,0 +1,11 @@
+
+.board{
+  height: 100px;
+  min-width: 120px;
+  background-color: beige;
+  border-radius: 30px;
+  padding: 10px 0 0 15px;
+  justify-content: center;
+  align-items: center;
+  
+}
