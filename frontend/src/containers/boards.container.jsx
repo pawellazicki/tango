@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Board from '../components/Board.component'
-import '../App.css';
+import Board from '../components/Board.component';
+import Loading from '../components/Loading.component';
+import './boards.container.css';
 import {fetchBoards} from '../API/BoardsAPI';
 
 
@@ -19,7 +20,8 @@ export default function Boards() {
         <div className="tabs-container">
             <h2 className="myBoards">My Boards</h2>
             <div className="tabs">
-                {data.map(board => (
+                {
+                loading ? <Loading/> : data.map(board => (
                     <Board key={board.id} title={board.title} team={board.team_name}></Board>
                 ))}
             </div>

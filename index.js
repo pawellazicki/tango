@@ -1,6 +1,7 @@
 'use strict';
 
 const Hapi = require('@hapi/hapi');
+const { Exception } = require('handlebars');
 const MySQL = require('mysql');
 
 const init = async () => {
