@@ -1,14 +1,7 @@
 'use strict';
 const Hapi = require('@hapi/hapi');
-<<<<<<< HEAD
 const { Exception } = require('handlebars');
-=======
 const Jwt = require('@hapi/jwt');
-<<<<<<< HEAD
->>>>>>> jwt auth
-const MySQL = require('mysql');
-=======
->>>>>>> auth signin done
 const routes = require('./app/router/index.js');
 require('dotenv').config();
 
@@ -20,17 +13,6 @@ const init = async () => {
         debug: { request: ['error'] }
     });
 
-<<<<<<< HEAD
-    const connection = MySQL.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'root',
-<<<<<<< HEAD
-        database: 'trello'
-=======
-        database: 'trello2'
->>>>>>> db
-=======
     await server.register({
         plugin: require('hapi-plugin-mysql'),
         options: {
@@ -39,7 +21,6 @@ const init = async () => {
             password: 'root',
             database: 'trello'
         }
->>>>>>> auth signin done
     });
 
     await server.register(Jwt);
@@ -59,55 +40,7 @@ const init = async () => {
     });
     server.auth.default('jwt');
 
-<<<<<<< HEAD
-    connection.connect();
-
-    server.views({
-        engines: {
-            html: require('handlebars')
-        },
-        relativeTo: __dirname,
-        path: 'templates'
-    });
-
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: (request, h) => {
-            return h.view("index", { title: 'tango2' });
-        }
-    });
-
-    server.route({
-        method: 'GET',
-        path: '/mock',
-        handler: (request, h) => {
-            return { data };
-        }
-    });
-
-    function getBoards() {
-        return new Promise((resolve, reject) => {
-            connection.query('SELECT * FROM board', [], function (err, results) {
-                if (err) {
-                    return reject(error)
-                }
-                return resolve(results);
-            })
-        })
-    }
-
-    server.route({
-        method: 'GET',
-        path: '/boards',
-        handler: async (request, h) => {
-            // maybe add some error handling here
-            return await getBoards();
-        }
-    });
-=======
     server.route(routes);
->>>>>>> refactor
 
     await server.start();
     console.log('Server running on %s', server.info.uri);

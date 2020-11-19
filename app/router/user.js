@@ -2,7 +2,7 @@
 const handlers = require('../handlers/user/user');
 const Joi = require('Joi');
 const bcrypt = require('bcrypt');
-const saltRounds = process.env.PORT;
+const saltRounds = process.env.SALTROUNDS;
 
 module.exports = [
     {
@@ -46,8 +46,30 @@ module.exports = [
                 })
             }
         }
+    },
+    {
+        method: 'GET',
+        path: '/boards',
+        options: {
+            auth: false,
+        },
+        handler: async (request, h) => {
+            // maybe add some error handling here
+            return await getBoards(request);
+        }
     }
 ]
+
+function getBoards(request) {
+    return new Promise((resolve, reject) => {
+        request.app.db.query('SELECT * FROM board', [], function (err, results) {
+            if (err) {
+                return reject(error)
+            }
+            return resolve(results);
+        })
+    })
+}
 
 function createPassword(plainPass) {
     return bcrypt.hashSync(plainPass, saltRounds); 
