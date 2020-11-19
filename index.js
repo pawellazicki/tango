@@ -37,7 +37,7 @@ const init = async () => {
             host: 'localhost',
             user: 'root',
             password: 'root',
-            database: 'trello2'
+            database: 'trello'
         }
 >>>>>>> auth signin done
     });
