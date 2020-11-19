@@ -4,18 +4,23 @@ const Hapi = require('@hapi/hapi');
 const { Exception } = require('handlebars');
 =======
 const Jwt = require('@hapi/jwt');
+<<<<<<< HEAD
 >>>>>>> jwt auth
 const MySQL = require('mysql');
+=======
+>>>>>>> auth signin done
 const routes = require('./app/router/index.js');
+require('dotenv').config();
 
 const init = async () => {
 
     const server = Hapi.server({
-        port: 3001,
+        port: process.env.PORT,
         host: 'localhost',
         debug: { request: ['error'] }
     });
 
+<<<<<<< HEAD
     const connection = MySQL.createConnection({
         host: 'localhost',
         user: 'root',
@@ -25,18 +30,25 @@ const init = async () => {
 =======
         database: 'trello2'
 >>>>>>> db
+=======
+    await server.register({
+        plugin: require('hapi-plugin-mysql'),
+        options: {
+            host: 'localhost',
+            user: 'root',
+            password: 'root',
+            database: 'trello2'
+        }
+>>>>>>> auth signin done
     });
-
-    await connection.connect();
-    server.decorate('request', 'getDatabase', () => { return connection; });
 
     await server.register(Jwt);
 
     server.auth.strategy('jwt', 'jwt', {
-        keys: 'my_secret$$!gf21!#!GT$@dddddddddddddddddddddddddddddddddddddddddddddddddd!!FDFS',
+        keys: process.env.HASHKEY,
         verify: {
             aud: false,
-            iss: 'https://trello.tango2.pl',
+            iss: process.env.ISS,
             sub: false,
             nbf: true,
             exp: true,
