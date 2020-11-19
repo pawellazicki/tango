@@ -1,0 +1,16 @@
+DROP DATABASE IF EXISTS trello2;
+CREATE DATABASE IF NOT EXISTS trello2;
+
+USE trello2;
+
+DROP TABLE IF EXISTS USER;
+CREATE TABLE USER (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    password VARCHAR(100),
+    email VARCHAR(50),
+    is_active BOOLEAN NOT NULL DEFAULT true,
+    reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+INSERT INTO USER (username, password, email) VALUES ("admin", "admin", "admin@admin.com");

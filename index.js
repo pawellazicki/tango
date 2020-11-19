@@ -12,14 +12,19 @@ const init = async () => {
 
     const server = Hapi.server({
         port: 3001,
-        host: 'localhost'
+        host: 'localhost',
+        debug: { request: ['error'] }
     });
 
     const connection = MySQL.createConnection({
         host: 'localhost',
         user: 'root',
         password: 'root',
+<<<<<<< HEAD
         database: 'trello'
+=======
+        database: 'trello2'
+>>>>>>> db
     });
 
     await connection.connect();
@@ -27,29 +32,20 @@ const init = async () => {
 
     await server.register(Jwt);
 
-    server.auth.strategy('jwt_trello_strategy', 'jwt', {
-        keys: {
-            key: 'https://dev-adpf9l5z.eu.auth0.com/.well-known/jwks.json',
-            algorithms: ['RS256']
-        },
+    server.auth.strategy('jwt', 'jwt', {
+        keys: 'my_secret$$!gf21!#!GT$@dddddddddddddddddddddddddddddddddddddddddddddddddd!!FDFS',
         verify: {
-            aud: 'http://trellotango2.com',
-            iss: 'https://dev-adpf9l5z.eu.auth0.com/',
+            aud: false,
+            iss: 'https://trello.tango2.pl',
             sub: false,
             nbf: true,
             exp: true,
             maxAgeSec: 14400, // 4 hours
             timeSkewSec: 15
         },
-        validate: (artifacts, request, h) => {
-
-            return {
-                isValid: true,
-                credentials: { user: artifacts.decoded.payload.user }
-            };
-        }
+        validate: false
     });
-    server.auth.default('jwt_trello_strategy');
+    server.auth.default('jwt');
 
 <<<<<<< HEAD
     connection.connect();
