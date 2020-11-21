@@ -1,8 +1,6 @@
 'use strict';
 const handlers = require('../handlers/user/user');
 const Joi = require('Joi');
-const bcrypt = require('bcrypt');
-const saltRounds = process.env.SALTROUNDS;
 
 module.exports = [
     {
@@ -33,8 +31,8 @@ module.exports = [
         method: 'POST',
         path: '/auth/signup',
         handler: async (request, h) => {
-            
-            return h.response({"message": "User created"});
+            const response1 = await handlers.createUser(request);
+            return h.response(response1);
         },
         options: {
             auth: false,
@@ -43,6 +41,7 @@ module.exports = [
                     username: Joi.string().min(4).max(50).required(),
                     password: Joi.string().min(5).required(),
                     password_2: Joi.string().min(5).required(),
+                    email: Joi.string().email().required()
                 })
             }
         }
@@ -50,9 +49,6 @@ module.exports = [
     {
         method: 'GET',
         path: '/boards',
-        options: {
-            auth: false,
-        },
         handler: async (request, h) => {
             // maybe add some error handling here
             return await getBoards(request);
@@ -69,8 +65,4 @@ function getBoards(request) {
             return resolve(results);
         })
     })
-}
-
-function createPassword(plainPass) {
-    return bcrypt.hashSync(plainPass, saltRounds); 
 }

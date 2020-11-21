@@ -1,6 +1,7 @@
 const UserDAO = require('../../dao/user');
 const bcrypt = require('bcrypt');
 const Jwt = require('@hapi/jwt');
+const saltRounds = process.env.SALTROUNDS;
 
 async function checkCreds(request) {
     userDAO = new UserDAO(request.app.db);
@@ -31,4 +32,34 @@ function createToken(username) {
     return token;
 }
 
+async function createUser(request) {
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hash = bcrypt.hashSync(request.payload.password, salt);
+    userDAO = new UserDAO(request.app.db);
+
+    isRegistred = await userDAO.find(request.payload.username);
+    if(isRegistred != null) {
+        return {
+            "code": "401",
+            "message": "user exists"
+        };
+    }
+
+    user = {
+        username: request.payload.username,
+        password: hash,
+        email: request.payload.email
+    }
+
+    userDAO.save(user); 
+    const token = createToken(request.payload.username);
+    
+    return {
+        "code": "200",
+        "token": token,
+        "message": "user created"
+    };
+}
+
 module.exports.checkCreds = checkCreds;
+module.exports.createUser = createUser;
