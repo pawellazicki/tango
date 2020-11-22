@@ -1,77 +1,52 @@
 'use strict';
-
 const Hapi = require('@hapi/hapi');
-const MySQL = require('mysql');
+const { Exception } = require('handlebars');
+const Jwt = require('@hapi/jwt');
+const routes = require('./app/router/index.js');
+require('dotenv').config();
 
 const init = async () => {
 
-    const connection = MySQL.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'root',
-        database: 'world'
-    });
-
     const server = Hapi.server({
-        port: 3001,
-        host: 'localhost'
+        port: process.env.PORT,
+        host: 'localhost',
+        debug: { request: ['error'] }
     });
 
-    await server.register(require('@hapi/vision'));
+    await server.register({
+        plugin: require('hapi-plugin-mysql'),
+        options: {
+            host: 'localhost',
+            user: 'root',
+            password: 'root',
+            database: 'trello'
+        }
+    });
 
-    connection.connect();
+    await server.register(Jwt);
 
-    server.views({
-        engines: {
-            html: require('handlebars')
+    server.auth.strategy('jwt', 'jwt', {
+        keys: process.env.HASHKEY,
+        verify: {
+            aud: false,
+            iss: process.env.ISS,
+            sub: false,
+            nbf: true,
+            exp: true,
+            maxAgeSec: 14400, // 4 hours
+            timeSkewSec: 15
         },
-        relativeTo: __dirname,
-        path: 'templates'
+        validate: false
     });
+    server.auth.default('jwt');
 
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: (request, h) => {
-            return h.view("index", { title: 'tango2' });
-        }
-    });
-
-    server.route({
-        method: 'GET',
-        path: '/mock',
-        handler: (request, h) => {
-            return { data };
-        }
-    });
-
-    function getFirstCity() {
-        return new Promise((resolve, reject) => {
-            connection.query('SELECT * FROM city', [], function (err, results) {
-                if (err) {
-                    return reject(error)
-                }
-                return resolve(results[0]);
-            })
-        })
-    }
-
-    server.route({
-        method: 'GET',
-        path: '/city',
-        handler: async (request, h) => {
-            // maybe add some error handling here
-            return await getFirstCity();
-        }
-    });
-
+    server.route(routes);
 
     await server.start();
     console.log('Server running on %s', server.info.uri);
 };
 
 process.on('unhandledRejection', (err) => {
-
     console.log(err);
     process.exit(1);
 });
