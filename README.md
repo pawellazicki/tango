@@ -27,16 +27,12 @@ flush privileges;
 
 ## Dodawanie tablic
 
-```
-create database trello
-create table board (
-	id int not null auto_increment,
-    title char(30) not null,
-    team_name char(50) not null,
-    primary key (id)
-)
+Odpal skrypt w ./infra-db/prepare-db.sql
 
-insert into board (title, team_name) values
-	('web app', 'tango'), ('mobile app', 'delta'),
-    ('calculator', 'best team');
-```
+## Dodawanie zmiennych srodowiskowych
+
+Zawartosc pliku 'env.demo' przekopiuj do .env (musisz go najpierw stworzyć)
+PORT - port serwera
+SALTROUNDS - ilosc iteracji przy haszowaniu hasla
+HASHKEY - klucz do podisywania hasla (ustalasz sobie cokolwiek np. 'strong_key')
+ISS - key issuer, przy sprawdzaniu tokena brana jest pod uwage domena z ktorej pochodzi - zostaw tak domyslnie
