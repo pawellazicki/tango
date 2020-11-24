@@ -8,7 +8,7 @@ module.exports = [
         path: '/auth/signin',
         handler: async (request, h) => {
             const token = await handlers.checkCreds(request);
-
+            
             if(token === '' || token == null) {
                 return h.response({message: "Bad creds"});
             }
