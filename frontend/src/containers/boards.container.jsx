@@ -5,32 +5,47 @@ import './boards.container.css';
 import {fetchBoards} from '../API/BoardsAPI';
 import { useHistory } from "react-router-dom";
 import { useDispatch } from 'react-redux'
-import { logUserOut } from "../action/userActions"
+import { loginSuccess, logUserOut } from "../action/userActions"
+import {useSelector} from 'react-redux'
 
 
 export default function Boards() {
     
+    const userReducer = useSelector(state => state.userReducer)
+
     const history = useHistory();
     const dispatch = useDispatch()
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const handleResponse = (response) => {
-        if(response.statusCode === 400){
+    const handleResponse = async (response) => {
+        console.log(response)
+        if(response.statusCode === 401){
             history.push("/login")
             dispatch(logUserOut());
         }
     }
 
+    const printBoards = (boardsData) => {
+        return( 
+            boardsData.map(board => 
+                <Board title={board.TITLE} team={board.TEAM_NAME}></Board>
+            )
+        )
+    }
+
     useEffect(() => {
+        console.log(userReducer.loggedIn)
         fetchBoards(localStorage.getItem("token")).then(result => {
-            console.log(data)
             handleResponse(result);
             setData(result.data);
         }).then(() => {
             setLoading(false);
+        }).catch(() => {
+            dispatch(logUserOut());
+            history.push("/login")
         })
-    }, [loading] );
+    }, [] );
 
     
     return (
@@ -38,9 +53,7 @@ export default function Boards() {
             <h2 className="myBoards">My Boards</h2>
             <div className="tabs">
                 {
-                loading ? <Loading/> : data.map(board => (
-                    <Board key={board.id} title={board.title} team={board.team_name}></Board>
-                ))}
+                loading ? <Loading/> : printBoards(data)}
             </div>
         </div>
     )

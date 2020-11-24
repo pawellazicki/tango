@@ -4,15 +4,16 @@ import './styles/index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux'
-import thunk from 'redux-thunk'
-import {createStore, applyMiddleware} from 'redux'
-import rootReducer from "./reducers/index"
+import { PersistGate } from 'redux-persist/integration/react'
+import configureStore from "./utils/configureStore"
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
+const {store, persistor} = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById('root')
 );

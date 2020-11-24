@@ -1,38 +1,43 @@
 // Action Creators
 
+import Axios from "axios"
+
 const setUser = () => ({ type: "SET_USER"})
 
 export const logUserOut = () => ({type: "LOG_OUT"})
 
+export const loginRequest = () => ({type: "LOGIN_REQUEST"})
+
+export const loginSuccess = () => ({type: "LOGIN_SUCCESS"})
+
+export const loginFailure = () => ({type: "LOGIN_FAILURE"})
+
 // Methods
 
-export const fetchUser = (username, password, callback) => dispatch => {
-    fetch("/auth/signin", {
+export const fetchUser = (username, password) => {
+    return Axios({
+        method: "POST",
+        url: '/auth/signin',
+        data:{
+            username: username,
+            password, password
+        }
+    })
+}
+
+export const signUserUp = (username, password, password_2, email,  callback) => dispatch => {
+    fetch(`/auth/signup`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
         body: JSON.stringify({
-            "username": username,
-            "password": password
+            username,
+            password,
+            password_2,
+            email
         })
-    })
-    .then(res => res.json())
-    .then(data => {
-        localStorage.setItem("token", data.token)
-        dispatch(setUser())
-    }).then(callback);
-}
-
-export const signUserUp = (userInfo) => dispatch => {
-    fetch(`http://localhost:4000/users`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify(userInfo)
     })
     .then(res => res.json())
     .then(data => {

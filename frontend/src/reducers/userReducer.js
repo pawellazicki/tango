@@ -5,9 +5,17 @@ const defaultState = {
 
 const userReducer = (state = defaultState, action) => {
     switch(action.type){
-        case "SET_USER":
+        case "LOGIN_REQUEST":
+            return{
+                loggedIn: false
+            }
+        case "LOGIN_SUCCESS":
+            return{
+                loggedIn: true
+        }
+        case "LOGIN_FAILURE":
             return {
-                loggedIn: true,
+                loggedIn: false,
                 // user: {...action.payload}
             }
         case "LOG_OUT":
