@@ -9,8 +9,3 @@
   grid-gap: 20px;
   grid-auto-rows: minmax(100px, auto);
 }
-
-.myBoards{
-  color: white;
-  padding: 14px 30px;
-}
