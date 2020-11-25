@@ -1,0 +1,32 @@
+.inputTitle {
+  padding: 5px;
+  margin-bottom: 5px;
+  height: 25px;
+  width: 200px;
+  background-color: beige;
+  font-weight: bold;
+  font-size: large;
+  border-color: gray;
+}
+
+.inputTeam {
+  padding: 5px;
+  margin: 0;
+  height: 25px;
+  width: 200px;
+  background-color: beige;
+  font-size: medium;
+  border-color: gray;
+}
+
+.buttonSaveBoard{
+  margin: 5px 0 0 15px ;
+  padding: 3px;
+  text-transform: none;
+  font-weight: bolder;
+  background-color: white;
+}
+
+.buttonSaveBoard:hover {
+  cursor: pointer;
+}

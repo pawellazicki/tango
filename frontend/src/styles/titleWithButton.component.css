@@ -1,0 +1,33 @@
+.wrap {
+  display: flex;
+  align-items: center;
+}
+
+.myBoards{
+  color: white;
+  padding: 14px 30px;
+}
+
+.addTabButton {
+  height: 35px;
+  width: 35px;
+  margin: 14px 0;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.addTabButton:hover {
+  cursor: pointer;
+}
+
+.addTabButton:active {
+  outline: none;
+  border: none;
+}
+
+.addTabButton:focus {
+  outline: none;
+  border: none;
+}
