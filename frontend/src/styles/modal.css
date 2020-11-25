@@ -1,0 +1,8 @@
+.customOverlay {
+  background: rgba(44, 42, 7, 0.596);
+}
+.customModal {
+  background: #b1832e;
+  max-width: 500px;
+  width: 100%;
+}

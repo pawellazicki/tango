@@ -1,14 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css';
+import '../styles/App.css';
+import { useDispatch } from 'react-redux'
+import { useHistory } from "react-router-dom";
+import { logUserOut } from "../action/userActions"
 
-function NavBar(props) {
+function NavBar({isAuthenticated}) {
+
+    let history = useHistory();
+    const dispatch = useDispatch()
+
+    const logOut = () => {
+        history.push("/login")
+        dispatch(logUserOut());
+    }
 
     return (
         <ul className="topnav">
-            <li className="right"><Link to={'/'} className="nav-link">Boards</Link></li>
-            <li className="right"><Link to={'/login'} className="nav-link">Login</Link></li>
-            <li className="right"><Link to={'/register'} className="nav-link">Register</Link></li>
+            { !isAuthenticated && <li className="right"><Link to={'/login'} className="nav-link">Login</Link></li> }
+            { !isAuthenticated && <li className="right"><Link to={'/register'} className="nav-link">Register</Link></li> }
+            { isAuthenticated && <li className="right"><Link to={'/login'} onClick={logOut} className="nav-link">Log out</Link></li> }
+            
         </ul>
     );
 }
