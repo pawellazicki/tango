@@ -25,29 +25,20 @@ export const fetchUser = (username, password) => {
     })
 }
 
-export const signUserUp = (username, password, password_2, email,  callback) => dispatch => {
-    fetch(`/auth/signup`, {
+export const signUserUp = (username, password, password_2, email,  callback) => {
+    return Axios({
+        url: '/auth/signup',
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
-        body: JSON.stringify({
+        data: {
             username,
             password,
             password_2,
             email
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        // data sent back will in the format of
-        // {
-        //     user: {},
-        //.    token: "aaaaa.bbbbb.bbbbb"
-        // }
-        localStorage.setItem("token", data.token)
-        dispatch(setUser(data.user))
+        }
     })
 }
 

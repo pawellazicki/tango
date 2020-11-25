@@ -19,7 +19,6 @@ export default function Boards() {
     const [loading, setLoading] = useState(true);
 
     const handleResponse = async (response) => {
-        console.log(response)
         if(response.statusCode === 401){
             history.push("/login")
             dispatch(logUserOut());
@@ -35,7 +34,6 @@ export default function Boards() {
     }
 
     useEffect(() => {
-        console.log(userReducer.loggedIn)
         fetchBoards(localStorage.getItem("token")).then(result => {
             handleResponse(result);
             setData(result.data);
