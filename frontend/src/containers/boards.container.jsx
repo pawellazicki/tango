@@ -40,9 +40,7 @@ export default function Boards() {
     }
 
     const saveBoard = () => {
-        console.log('save board');
-        createBoard(newTabTitle, newTabTeam, localStorage.getItem("token"))
-        .then((response) => console.log(response));
+        createBoard(newTabTeam, newTabTeam, localStorage.getItem("token"))
     }
 
     useEffect(() => {

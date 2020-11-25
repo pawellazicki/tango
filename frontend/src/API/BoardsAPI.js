@@ -11,7 +11,7 @@ export const fetchBoards = async (token) => {
   });
 }
 
-export const createBoard = (title, team, token) => {
+export const createBoard = (title, team_name, token) => {
     return Axios({
         url: '/boards/insert',
         method: "POST",
@@ -22,7 +22,7 @@ export const createBoard = (title, team, token) => {
         },
         data: {
             title,
-            team
+            team_name
         }
     })
 }
