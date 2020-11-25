@@ -1,7 +1,7 @@
-import axios from 'axios';
+import Axios from 'axios';
 
 export const fetchBoards = async (token) => {
-  return axios.get('/boards',
+  return Axios.get('/boards',
   {
     method: "GET",
     headers: {
@@ -9,4 +9,20 @@ export const fetchBoards = async (token) => {
       "Content-type": "application/json"
     }
   });
+}
+
+export const createBoard = (title, team, token) => {
+    return Axios({
+        url: '/boards/insert',
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        data: {
+            title,
+            team
+        }
+    })
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Board from '../components/Board.component';
 import Loading from '../components/Loading.component';
 import '../styles/boards.container.css';
-import {fetchBoards} from '../API/BoardsAPI';
+import {fetchBoards, createBoard} from '../API/BoardsAPI';
 import { useHistory } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import { loginSuccess, logUserOut } from "../action/userActions"
@@ -39,6 +39,12 @@ export default function Boards() {
         )
     }
 
+    const saveBoard = () => {
+        console.log('save board');
+        createBoard(newTabTitle, newTabTeam, localStorage.getItem("token"))
+        .then((response) => console.log(response));
+    }
+
     useEffect(() => {
         fetchBoards(localStorage.getItem("token")).then(result => {
             handleResponse(result);
@@ -64,7 +70,7 @@ export default function Boards() {
                         setNewTabTitle={setNewTabTitle}
                         newTabTeam={newTabTeam}
                         setNewTabTeam={setNewTabTeam}
-                        setSaveNewTab={setSaveNewTab}/> 
+                        setSaveNewTab={saveBoard}/> 
                     : null}
             </div>
         </div>
