@@ -22,7 +22,6 @@ export default function Boards() {
     const [addTab, setAddTab] = useState(false);
     const [newTabTitle, setNewTabTitle] = useState('');
     const [newTabTeam, setNewTabTeam] = useState('');
-    const [saveNewTab, setSaveNewTab] = useState(false);
 
     const handleResponse = async (response) => {
         if(response.statusCode === 401){
@@ -40,7 +39,13 @@ export default function Boards() {
     }
 
     const saveBoard = () => {
-        createBoard(newTabTeam, newTabTeam, localStorage.getItem("token"))
+        createBoard(newTabTeam, newTabTeam, localStorage.getItem("token"));
+
+        fetchBoards(localStorage.getItem("token")).then(result => {
+            handleResponse(result);
+            setData(result.data);
+        })
+        setAddTab(false);
     }
 
     useEffect(() => {
