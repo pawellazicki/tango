@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Board.component.css';
 import '../styles/newBoard.component.css';
+import IconButton from "@material-ui/core/IconButton";
+import EditRoundedIcon from "@material-ui/icons/EditRounded";
 
 const NewBoard = ({newTabTitle, setNewTabTitle, newTabTeam, setNewTabTeam, setSaveNewTab}) => {
   
@@ -18,11 +20,10 @@ const NewBoard = ({newTabTitle, setNewTabTitle, newTabTeam, setNewTabTeam, setSa
             onChange={event => setNewTabTeam(event.target.value)}
             placeholder={"Team name"}
             type="text"/>
-            <button
-              className="buttonSaveBoard"
-              onClick={() => setSaveNewTab(true)}
-              >Save
-            </button>
+            <IconButton className={"BoardButton"}
+              onClick={() => setSaveNewTab(true)}>
+              <EditRoundedIcon color="action" />
+            </IconButton>
       </div>
   );
 }

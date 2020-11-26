@@ -1,11 +1,25 @@
-
-.board{
-  height: 100px;
+.board {
+  height: 120px;
   min-width: 120px;
   background-color: beige;
   border-radius: 30px;
   padding: 10px 0 0 15px;
   justify-content: center;
   align-items: center;
-  
+}
+
+.BoardButton {
+  margin-top: 5px !important;
+  width: 45px !important;
+  height: 45px !important;
+  border-radius: 50% !important;
+  background-color: inherit !important;
+}
+
+.BoardButton:hover {
+  background-color: #c5aa10 !important;
+}
+
+.ButtonsContainer {
+  display: flex;
 }

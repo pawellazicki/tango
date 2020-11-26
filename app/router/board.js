@@ -26,6 +26,14 @@ module.exports = [
             // maybe add some error handling here
             return await getBoards(request);
         }
+    },
+    {
+        method: 'DELETE',
+        path: '/boards/remove',
+        handler: async (request, h) => {
+            const response1 = await handlers.removeBoard(request);
+            return h.response(response1);
+        }
     }
 ]
 
