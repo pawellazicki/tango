@@ -11,12 +11,23 @@ async function createBoard(request) {
         team_name: request.payload.team_name
     }
 
-    boardDAO.save(board); 
-    
+    boardDAO.save(board);
+
     return {
         "code": "200",
         "message": "board created"
     };
 }
 
+async function deleteBoard(request) {
+    boardDAO = new BoardDAO(request.app.db);
+    boardDAO.remove(request.payload.id)
+
+    return {
+        "code": "200",
+        "message": "board " + request.payload.id + " deleted"
+    };
+}
+
 module.exports.createBoard = createBoard;
+module.exports.removeBoard = deleteBoard;

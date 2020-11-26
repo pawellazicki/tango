@@ -10,20 +10,40 @@ const BoardDAO = class BoardDAO {
             board.title,
             board.team_name
         ];
-        let sql =   'INSERT INTO BOARD (TITLE, TEAM_NAME) VALUES (?, ?)'
+        let sql = 'INSERT INTO BOARD (TITLE, TEAM_NAME) VALUES (?, ?)'
 
         return await new Promise((resolve, reject) => {
             this.dbConnection.query({
-                sql: sql, 
+                sql: sql,
                 values: values,
-            }, 
-            function (err, results) {
-                if (err) {
-                    resolve(results);
-                }
+            },
+                function (err, results) {
+                    if (err) {
+                        resolve(results);
+                    }
 
-                resolve(results[0]);
-            })
+                    resolve(results[0]);
+                })
+        });
+    }
+
+    async remove(id) {
+        let values = [
+            id
+        ]
+        let sql = 'DELETE FROM BOARD WHERE ID = ?'
+        return await new Promise((resolve, reject) => {
+            this.dbConnection.query({
+                sql: sql,
+                values: values,
+            },
+                function (err, results) {
+                    if (err) {
+                        resolve(results);
+                    }
+
+                    resolve(results);
+                })
         });
     }
 }

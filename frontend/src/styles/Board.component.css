@@ -1,5 +1,4 @@
-
-.board{
+.board {
   height: 100px;
   min-width: 120px;
   background-color: beige;
@@ -7,5 +6,17 @@
   padding: 10px 0 0 15px;
   justify-content: center;
   align-items: center;
-  
+}
+
+.BoardButton {
+  border-radius: 180px !important;
+  background-color: inherit !important;
+}
+
+.BoardButton:hover {
+  background-color: #c5aa10 !important;
+}
+
+.ButtonsContainer {
+  display: flex;
 }
