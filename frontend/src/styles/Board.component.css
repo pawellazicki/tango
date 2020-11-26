@@ -1,5 +1,5 @@
 .board {
-  height: 100px;
+  height: 120px;
   min-width: 120px;
   background-color: beige;
   border-radius: 30px;
@@ -9,7 +9,10 @@
 }
 
 .BoardButton {
-  border-radius: 180px !important;
+  margin-top: 5px !important;
+  width: 45px !important;
+  height: 45px !important;
+  border-radius: 50% !important;
   background-color: inherit !important;
 }
 

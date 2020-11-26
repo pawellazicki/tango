@@ -21,9 +21,6 @@ export default function Boards() {
   const [newTabTitle, setNewTabTitle] = useState("");
   const [newTabTeam, setNewTabTeam] = useState("");
 
-  const [dataLen, setDataLen] = useState(0);
-  const [refreshDataLen, setRefreshDataLen] = useState(0);
-
   const handleResponse = async (response) => {
     if (response.statusCode === 401) {
       history.push("/login");
@@ -45,13 +42,17 @@ export default function Boards() {
   const removeBoard = (id) => {
     deleteBoard(id, localStorage.getItem("token")).then((result) => {
       const found = data.find((element) => element.ID === id);
-      setRefreshDataLen(dataLen - 1);
+      if(result.data.code === '200')
+        refreshBoards();
     });
   };
 
   const saveBoard = () => {
-    createBoard(newTabTeam, newTabTeam, localStorage.getItem("token"));
-    setRefreshDataLen(dataLen + 1);
+    createBoard(newTabTitle, newTabTeam, localStorage.getItem("token"))
+    .then((response) => {
+      if(response.data.code === '200')
+        refreshBoards();
+    });
     clearNewBoard();
   };
 
@@ -66,7 +67,6 @@ export default function Boards() {
       .then((result) => {
         handleResponse(result);
         setData(result.data);
-        setRefreshDataLen(result.data.length);
       })
       .then(() => {
         setLoading(false);
@@ -76,14 +76,13 @@ export default function Boards() {
         history.push("/login");
       });
   }, []);
-
-  if(dataLen !== refreshDataLen){
-    setDataLen(refreshDataLen);
-    fetchBoards(localStorage.getItem("token")).then((result) => {
-      handleResponse(result);
-      setData(result.data);
-      setRefreshDataLen(result.data.length);
-    })
+  
+  const refreshBoards  = () => {
+    fetchBoards(localStorage.getItem("token"))
+      .then((result) => {
+        handleResponse(result);
+        setData(result.data);
+      });    
   }
 
   return (
