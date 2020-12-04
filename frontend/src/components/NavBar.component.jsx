@@ -20,6 +20,7 @@ function NavBar({isAuthenticated}) {
             { !isAuthenticated && <li className="right"><Link to={'/login'} className="nav-link">Login</Link></li> }
             { !isAuthenticated && <li className="right"><Link to={'/register'} className="nav-link">Register</Link></li> }
             { isAuthenticated && <li className="right"><Link to={'/login'} onClick={logOut} className="nav-link">Log out</Link></li> }
+            { isAuthenticated && <li className="right"><Link to={'/'} className="nav-link">Boards</Link></li> }
             
         </ul>
     );

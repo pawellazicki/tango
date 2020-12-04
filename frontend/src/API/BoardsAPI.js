@@ -41,3 +41,14 @@ export const deleteBoard = (id, token) => {
     }
   })
 }
+
+export const getBoard = (id, token) => {
+  return Axios({
+    url: `/board/${id}`,
+    method: "GET",
+    headers: {
+      "Authorization": "Bearer " + token,
+      "Content-Type": "application/json"
+    }
+  })
+}

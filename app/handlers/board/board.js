@@ -29,5 +29,11 @@ async function deleteBoard(request) {
     };
 }
 
+async function getBoard(request) {
+    boardDAO = new BoardDAO(request.app.db);
+    return boardDAO.get(request.params.id)
+}
+
 module.exports.createBoard = createBoard;
 module.exports.removeBoard = deleteBoard;
+module.exports.getBoard = getBoard;

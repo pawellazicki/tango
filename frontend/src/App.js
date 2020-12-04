@@ -2,6 +2,7 @@ import React from 'react';
 import './styles/App.css';
 import NavBar from './components/NavBar.component';
 import Boards from './containers/boards.container'
+import BoardView from './containers/boardView.container'
 import {useSelector} from 'react-redux'
 import {
   BrowserRouter as Router,
@@ -29,6 +30,7 @@ const App = () => {
             <Route path='/login' component={Login} />
             <Route path='/register' component={Register} />
             <Route path='/boards' component={Boards} />
+            <Route path='/board/:id' component={BoardView} />
           </Switch>
         </Router>
       </div>
