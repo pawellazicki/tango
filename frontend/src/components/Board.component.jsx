@@ -11,7 +11,8 @@ function Board({ id, title, team, onDelete }) {
     <div className="board">
       <h3>{title}</h3>
       <p>{team}</p>
-      <BoardButtons onDelete={onDeleteBoards} />
+      
+      <BoardButtons onDelete={onDeleteBoards} board_id={id}/>
     </div>
   );
 }
