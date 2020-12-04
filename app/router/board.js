@@ -34,6 +34,14 @@ module.exports = [
             const response1 = await handlers.removeBoard(request);
             return h.response(response1);
         }
+    },
+    {
+        method: 'GET',
+        path: '/board/{id}',
+        handler: async (request, h) => {
+            const response = await handlers.getBoard(request);
+            return h.response(response);
+        }
     }
 ]
 
