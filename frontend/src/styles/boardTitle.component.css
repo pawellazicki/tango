@@ -1,0 +1,16 @@
+.inputBoardTitle {
+  background-color: transparent;
+  color: aliceblue;
+  border: none;
+  font-size: 2.5vw;
+}
+
+.inputBoardTitle:active {
+  outline: none;
+  border: none;
+}
+
+.inputBoardTitle:focus {
+  outline: none;
+  border: none;
+}

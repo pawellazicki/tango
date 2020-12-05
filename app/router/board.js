@@ -36,6 +36,14 @@ module.exports = [
         }
     },
     {
+        method: 'PUT',
+        path: '/board/update',
+        handler: async (request, h) => {
+            const response1 = await handlers.updateBoard(request);
+            return h.response(response1);
+        }
+    },
+    {
         method: 'GET',
         path: '/board/{id}',
         handler: async (request, h) => {

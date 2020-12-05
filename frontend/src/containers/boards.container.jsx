@@ -31,6 +31,7 @@ export default function Boards() {
   const printBoards = (boardsData) => {
     return boardsData.map((board) => (
       <Board
+        key={board.ID}
         id={board.ID}
         title={board.TITLE}
         team={board.TEAM_NAME}
