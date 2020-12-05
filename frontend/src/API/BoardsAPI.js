@@ -27,6 +27,23 @@ export const createBoard = (title, team_name, token) => {
   })
 }
 
+export const updateBoard = (id, title, team_name, token) => {
+  return Axios({
+    url: `/board/update`,
+    method: "PUT",
+    headers: {
+      "Authorization": "Bearer " + token,
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    data: {
+      id,
+      title,
+      team_name
+    }
+  })
+}
+
 export const deleteBoard = (id, token) => {
   return Axios({
     url: '/boards/remove',

@@ -34,6 +34,19 @@ async function getBoard(request) {
     return boardDAO.get(request.params.id)
 }
 
+
+async function updateBoard(request) {
+    boardDAO = new BoardDAO(request.app.db);
+    
+    board = {
+        id: request.payload.id,
+        title: request.payload.title,
+        team_name: request.payload.team_name
+    }
+    return boardDAO.update(board)
+}
+
 module.exports.createBoard = createBoard;
 module.exports.removeBoard = deleteBoard;
 module.exports.getBoard = getBoard;
+module.exports.updateBoard = updateBoard;
