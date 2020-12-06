@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
-export const fetchBoards = async (token) => {
-  return Axios.get('/boards',
+export const fetchBoards = async (user_id, token) => {
+  return Axios.get(`/boards/${user_id}`,
     {
       method: "GET",
       headers: {
@@ -11,9 +11,9 @@ export const fetchBoards = async (token) => {
     });
 }
 
-export const createBoard = (title, team_name, token) => {
+export const createBoard = (title, team_name, user_id, token) => {
   return Axios({
-    url: '/boards/insert',
+    url: `/boards/insert/${user_id}`,
     method: "POST",
     headers: {
       "Authorization": "Bearer " + token,

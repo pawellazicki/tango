@@ -7,13 +7,16 @@ module.exports = [
         method: 'POST',
         path: '/auth/signin',
         handler: async (request, h) => {
-            const token = await handlers.checkCreds(request);
+            const result = await handlers.checkCreds(request);
             
-            if(token === '' || token == null) {
+            if(result.token === '' || result.token == null) {
                 return h.response({message: "Bad creds"});
             }
 
-            const response = h.response({token: token});
+            const response = h.response({
+                token: result.token,
+                user_id: result.user_id
+            });
             response.type('application/json');
             return response;
         },

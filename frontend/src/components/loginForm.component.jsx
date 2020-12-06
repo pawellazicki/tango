@@ -37,6 +37,7 @@ export default function LoginForm() {
   const onLoginSuccess = (response) => {
     setFailedToLogin(false);
     localStorage.setItem("token", response.data.token);
+    localStorage.setItem("user_id", response.data.user_id);
     dispatch(loginSuccess());
     redirectToBoards();
   };
