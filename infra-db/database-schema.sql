@@ -18,7 +18,7 @@ CREATE TABLE USER
     is_active BOOLEAN NOT NULL DEFAULT true,
     reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON
     UPDATE CURRENT_TIMESTAMP
-    );
+);
 
     INSERT INTO USER
         (username, password, email)
@@ -47,7 +47,7 @@ CREATE TABLE USER
         (30) NOT NULL,
         TEAM_NAME CHAR
         (50) NOT NULL,
-        USER_ID INT UNSIGNED,
+        USER_ID INT UNSIGNED NOT NULL,
         PRIMARY KEY
         (ID),
         FOREIGN KEY
@@ -55,19 +55,17 @@ CREATE TABLE USER
         (id)
     );
 
+    INSERT INTO BOARD
+            (title, team_name, user_id)
+        VALUES
+            ('web app', 'tango', 1),
+            ('mobile app', 'delta', 2),
+            ('calculator', 'best team', 2);
 
-        CREATE TABLE TrelloList(
-	ListID INT Primary KEY,
+    DROP TABLE IF EXISTS TrelloList;
+    CREATE TABLE TrelloList(
+	ListID INT Primary KEY AUTO_INCREMENT,
     BoardID INT,
     ListName VARCHAR(50),
-    CONSTRAINT FOREIGN KEY
-        (BoardID) REFERENCES board
-        (ID)
-);
-
-        INSERT INTO BOARD
-            (title, team_name)
-        VALUES
-            ('web app', 'tango'),
-            ('mobile app', 'delta'),
-            ('calculator', 'best team');
+    CONSTRAINT FOREIGN KEY (BoardID) REFERENCES board (ID)
+); 

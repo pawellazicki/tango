@@ -6,7 +6,6 @@ const routes = require('./app/router/index.js');
 require('dotenv').config();
 
 const init = async () => {
-
     const server = Hapi.server({
         port: process.env.PORT,
         host: 'localhost',
@@ -36,7 +35,43 @@ const init = async () => {
             maxAgeSec: 14400, // 4 hours
             timeSkewSec: 15
         },
-        validate: false
+        validate: async (artifacts, request, h) => {
+            let user = await server.getDb(async (err, connection) => {
+                let values = [
+                    artifacts.decoded.payload.username
+                ];
+                let sql = 'SELECT ID, USERNAME FROM USER WHERE username = ?';
+                let userObj = await new Promise((resolve, reject) => {
+                    connection.query({
+                        sql: sql,
+                        values: values,
+                    },
+                        function (err, results) {
+                            if (err) {
+                                results = JSON.parse(JSON.stringify(results));
+                                results = results[0];
+                                results.isValid = false;
+                                reject(results);
+                            }
+                            
+                            results = JSON.parse(JSON.stringify(results));
+                            results = results[0];
+                            results.isValid = true;
+                            resolve(results);
+                        })
+                }); 
+
+                return userObj;
+            });
+
+            return {
+                isValid: user.isValid,
+                credentials: { 
+                    username: user.USERNAME,
+                    id: user.ID
+                }
+            };
+        }
     });
     server.auth.default('jwt');
 
