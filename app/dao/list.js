@@ -104,6 +104,35 @@ const ListDAO = class ListDAO {
             })
         });
     }
+
+    async editListName(listId, newTitle) {
+        let values = [
+            newTitle,
+            listId
+        ]
+
+        let sql = 'UPDATE TrelloList SET ListName = ? WHERE ListId = ?'
+        try {
+            await new Promise((resolve, reject) => {
+                this.dbConnection.query({
+                    sql: sql,
+                    values: values,
+                },
+                function (err, results) {
+                    if (err) {
+                        reject(err);
+                    }
+    
+                    resolve(results);
+                })
+            });
+        } catch (error) {
+            console.error(error);
+            return error.code + ": check server log";
+        }
+
+        return "Correctly patched"
+    }
 }
 
 module.exports = ListDAO;

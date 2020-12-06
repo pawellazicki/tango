@@ -41,5 +41,21 @@ module.exports = [
                 })
             }
         }
+    },
+    {
+        method: 'PATCH',
+        path: '/lists/edit',
+        handler: async (request, h) => {
+            const response = await handlers.editListName(request);
+            return h.response({"message":response});
+        },
+        options: {
+            validate: {
+                payload: Joi.object({
+                    listID: Joi.number().required(),
+                    newTitle: Joi.string().min(1).max(140).required(),
+                })
+            }
+        }
     }
 ]
