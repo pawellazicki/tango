@@ -105,6 +105,35 @@ const CardDAO = class CardDAO {
 
         return "Card deleted";
     }
+
+    async editCardName(cardID, cardName) {
+        let values = [
+            cardName,
+            cardID
+        ]
+
+        let sql = 'UPDATE Card SET CardName = ? WHERE CardID = ?'
+        try {
+            await new Promise((resolve, reject) => {
+                this.dbConnection.query({
+                    sql: sql,
+                    values: values,
+                },
+                function (err, results) {
+                    if (err) {
+                        reject(err);
+                    }
+    
+                    resolve(results);
+                })
+            });
+        } catch (error) {
+            console.error(error);
+            return error.code + ": check server log";
+        }
+
+        return "Card's name changed";
+    }
 }
 
 module.exports = CardDAO;
