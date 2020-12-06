@@ -65,7 +65,29 @@ CREATE TABLE USER
     DROP TABLE IF EXISTS TrelloList;
     CREATE TABLE TrelloList(
 	ListID INT Primary KEY AUTO_INCREMENT,
-    BoardID INT,
+    BoardID INT NOT NULL,
     ListName VARCHAR(50),
-    CONSTRAINT FOREIGN KEY (BoardID) REFERENCES board (ID)
-); 
+    CONSTRAINT FOREIGN KEY (BoardID) REFERENCES board (ID) ON DELETE CASCADE
+    ); 
+
+    INSERT INTO TrelloList VALUES (1, 2, "lista 123");
+    INSERT INTO TrelloList VALUES (2, 2, "lista fgfffff");
+    INSERT INTO TrelloList VALUES (3, 3, "lista b oad");
+    INSERT INTO TrelloList VALUES (4, 3, "listassssss");
+    INSERT INTO TrelloList VALUES (5, 1, "listassssss no access damian");
+
+    DROP TABLE IF EXISTS Card;
+    CREATE TABLE Card (
+	CardID INT Primary KEY AUTO_INCREMENT,
+    ListID INT NOT NULL,
+    CardName VARCHAR(50) NOT NULL,
+    Deadline DATETIME NOT NULL,
+    CONSTRAINT FOREIGN KEY (ListID) REFERENCES TrelloList (ListID) ON DELETE CASCADE
+    ); 
+
+    INSERT INTO Card VALUES (1, 1, "lista 1", "2020-01-01 10:10:10");
+    INSERT INTO Card VALUES (2, 2, "lista 2", "2020-01-01 10:10:10");
+    INSERT INTO Card VALUES (3, 3, "lista 3", "2020-01-01 10:10:10");
+    INSERT INTO Card VALUES (4, 4, "lista 4", "2020-01-01 10:10:10");
+    INSERT INTO Card VALUES (5, 1, "lista 1", "2020-01-01 10:10:10");
+    INSERT INTO Card VALUES (6, 1, "lista 1", "2020-01-01 10:10:10");
