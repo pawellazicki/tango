@@ -46,30 +46,39 @@ export default function TrelloList({ boardId }) {
 
   const addNewList = (title) => {
     createList(title, boardId, localStorage.getItem("token")).then(
-      refreshLists().then(setCreateListDialogOpen(false))
+      fetchLists().then((response) => {
+        setCreateListDialogOpen(false);
+        setTrelloLists(mapResponseToList(response.data));
+      })
     );
   };
 
   const deleteTrelloList = (id) => {
-    deleteList(id, localStorage.getItem("token")).then(setLoading(true));
+    deleteList(id, localStorage.getItem("token")).then(
+      fetchLists().then((response) =>
+        setTrelloLists(mapResponseToList(response.data))
+      )
+    );
   };
 
-  const refreshLists = () => {
-    return getLists(boardId, localStorage.getItem("token")).then((result) => {
-      if (result.status == "200") {
-        setTrelloLists(
-          result.data.map((entry) => ({
-            listName: entry.ListName,
-            listID: entry.ListID,
-          }))
-        );
-      }
-    });
+  const fetchLists = () => {
+    return getLists(boardId, localStorage.getItem("token"));
+  };
+
+  const mapResponseToList = (response) => {
+    return response.map((list) => ({
+      listName: list.ListName,
+      listID: list.ListID,
+    }));
   };
 
   useEffect(() => {
-    refreshLists().then(setLoading(false));
-  }, [trelloLists]);
+    fetchLists().then((response) => {
+      console.log(response);
+      setLoading(false);
+      setTrelloLists(mapResponseToList(response.data));
+    });
+  }, []);
 
   return (
     <div>

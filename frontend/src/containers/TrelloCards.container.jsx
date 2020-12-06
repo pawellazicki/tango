@@ -1,30 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TrelloCard from "../components/TrelloCard.component";
 import IconButton from "@material-ui/core/IconButton";
 import "../styles/TrelloCard.css";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CreateCard from "../components/CreateCard.comopnent";
-
-const cards = [
-  {
-    id: 1,
-    task: "i dont know",
-    endDate: "tomorrow",
-  },
-  {
-    id: 2,
-    task: "iidk",
-    endDate: "tomorrow",
-  },
-  {
-    id: 3,
-    task: "webh",
-    endDate: "tomorrow",
-  },
-];
+import { getCardsForList, createCard, deleteCard } from "../API/CardsAPI";
 
 export default function TrelloCards({ listID }) {
   const [newCardDialogOpen, setNewCardDialogOpen] = React.useState(false);
+  const [cards, setCards] = React.useState([]);
+
+  const fetchCards = () => {
+    return getCardsForList(listID, localStorage.getItem("token"));
+  };
 
   const printCards = () => {
     return cards.map((card) => (
@@ -32,7 +20,7 @@ export default function TrelloCards({ listID }) {
         id={card.id}
         task={card.task}
         endDate={card.endDate}
-        onDelete={() => onCardDelete(card.id)}
+        onDelete={(id) => onCardDelete(id)}
       />
     ));
   };
@@ -42,12 +30,37 @@ export default function TrelloCards({ listID }) {
   };
 
   const onCardDelete = (id) => {
-    console.log(id);
+    deleteCard(id, localStorage.getItem("token")).then(() => {
+      fetchCards().then((response) =>
+        setCards(mapResponseToCard(response.data))
+      );
+    });
   };
 
   const onCardAdd = () => {
     setNewCardDialogOpen(true);
   };
+
+  const addNewCard = (title, endDate) => {
+    createCard(listID, title, endDate, localStorage.getItem("token")).then(() =>
+      fetchCards().then((response) => {
+        setCards(mapResponseToCard(response.data));
+        setNewCardDialogOpen(false);
+      })
+    );
+  };
+
+  const mapResponseToCard = (cards) => {
+    return cards.map((card) => ({
+      id: card.CardID,
+      task: card.CardName,
+      endDate: new Date(card.Deadline).toLocaleDateString(),
+    }));
+  };
+
+  useEffect(() => {
+    fetchCards().then((response) => setCards(mapResponseToCard(response.data)));
+  }, []);
 
   return (
     <div className="CardList">
@@ -59,7 +72,11 @@ export default function TrelloCards({ listID }) {
       >
         <AddCircleIcon />
       </IconButton>
-      <CreateCard isOpen={newCardDialogOpen} handleClose={closeNewCardDialog} />
+      <CreateCard
+        isOpen={newCardDialogOpen}
+        handleClose={closeNewCardDialog}
+        handleAdd={addNewCard}
+      />
     </div>
   );
 }

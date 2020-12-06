@@ -20,7 +20,7 @@ export default function TrelloCard({ id, task, endDate, onDelete }) {
           <IconButton
             className="DeleteCardButton"
             aria-label="delete"
-            onClick={onDelete}
+            onClick={() => onDelete(id)}
           >
             <DeleteForeverIcon color="action" />
           </IconButton>

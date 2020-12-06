@@ -7,7 +7,10 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import "../styles/TrelloCard.css";
 
-export default function CreateCard({ isOpen, handleClose }) {
+export default function CreateCard({ isOpen, handleClose, handleAdd }) {
+  const [title, setTitle] = React.useState("");
+  const [endDate, setEndDate] = React.useState("");
+
   return (
     <div>
       <Dialog
@@ -19,9 +22,22 @@ export default function CreateCard({ isOpen, handleClose }) {
         <DialogTitle id="form-dialog-title">Create new card</DialogTitle>
         <DialogContent>
           <label className="createLabel">Task</label>
-          <TextField autoFocus margin="dense" id="task" type="text" fullWidth />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="task"
+            type="text"
+            onChange={(newValue) => setTitle(newValue.target.value)}
+            fullWidth
+          />
           <label className="createLabel">End date</label>
-          <TextField margin="dense" id="timestamp" type="date" fullWidth />
+          <TextField
+            margin="dense"
+            id="timestamp"
+            type="date"
+            onChange={(newValue) => setEndDate(newValue.target.value)}
+            fullWidth
+          />
         </DialogContent>
         <DialogActions>
           <Button
@@ -33,7 +49,7 @@ export default function CreateCard({ isOpen, handleClose }) {
           </Button>
           <Button
             className="DialogButton"
-            onClick={handleClose}
+            onClick={() => handleAdd(title, endDate)}
             color="primary"
           >
             Save
