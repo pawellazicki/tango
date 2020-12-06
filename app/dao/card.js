@@ -33,7 +33,7 @@ const CardDAO = class CardDAO {
             card.deadline,
         ]
 
-        let sql = 'INSERT INTO Card () VALUES ()'
+        let sql = 'INSERT INTO Card (ListID, CardName, Deadline) VALUES (?, ?, ?)'
         try {
             await new Promise((resolve, reject) => {
                 this.dbConnection.query({
@@ -53,7 +53,7 @@ const CardDAO = class CardDAO {
             return error.code + ": check server log";
         }
 
-        return "Correctly patched"
+        return "Card added";
     }
 }
 

@@ -27,7 +27,7 @@ async function addCard(request) {
     let boardDao = new BoardDAO(request.app.db);
 
     let userBoardsAccess = await boardDao.findByUserId(request.auth.credentials.id);
-    let requestingList = await listDao.findById(request.params.listID);
+    let requestingList = await listDao.findById(request.payload.listID);
     if(requestingList == null || requestingList.BoardID == null) {
         return { message: "List dosent exist" };
     }
@@ -37,12 +37,12 @@ async function addCard(request) {
     }
 
     card = {
-        listID: request.params.listID,
-        cardName: request.params.cardName,
-        deadline: request.params.deadline
+        listID: request.payload.listID,
+        cardName: request.payload.cardName,
+        deadline: request.payload.deadline
     };
 
-    return cardDao.save(card);
+    return { message: await cardDao.save(card) };
 }
 
 module.exports.getCards = getCards;

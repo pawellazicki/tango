@@ -17,13 +17,21 @@ module.exports = [
         handler: async (request, h) => {
             let date;
             try {
-                date = new Date(request.payload.deadline).toISOString();
+                var dateNow = new Date();
+                date = new Date(request.payload.deadline);
+
+                if(dateNow.getTime() > date.getTime()) {
+                    return { message: "Deadline is in the past" };
+                }
+
+                date = date.toISOString();
+
             } catch (error) {
                 console.log(error.message);
                 return { message: "Invalid date format" };
             }
             const response = await handlers.addCard(request);
-            return h.response({ "message": response });
+            return h.response(response);
         },
         options: {
             validate: {
