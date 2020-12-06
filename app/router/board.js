@@ -5,7 +5,7 @@ const Joi = require('Joi');
 module.exports = [
     {
         method: 'POST',
-        path: '/boards/insert',
+        path: '/boards/insert/{user_id}',
         handler: async (request, h) => {
             const response1 = await handlers.createBoard(request);
             return h.response(response1);
@@ -21,9 +21,8 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/boards',
+        path: '/boards/{user_id}',
         handler: async (request, h) => {
-            // maybe add some error handling here
             return await getBoards(request);
         }
     },
@@ -55,7 +54,7 @@ module.exports = [
 
 function getBoards(request) {
     return new Promise((resolve, reject) => {
-        request.app.db.query('SELECT * FROM board', [], function (err, results) {
+        request.app.db.query(`SELECT * FROM board WHERE USER_ID = ${request.params.user_id}`, [], function (err, results) {
             if (err) {
                 return reject(error)
             }

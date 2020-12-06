@@ -49,7 +49,7 @@ export default function Boards() {
   };
 
   const saveBoard = () => {
-    createBoard(newTabTitle, newTabTeam, localStorage.getItem("token"))
+    createBoard(newTabTitle, newTabTeam, localStorage.getItem("user_id"), localStorage.getItem("token"))
     .then((response) => {
       if(response.data.code === '200')
         refreshBoards();
@@ -64,7 +64,7 @@ export default function Boards() {
   }
 
   useEffect(() => {
-    fetchBoards(localStorage.getItem("token"))
+    fetchBoards(localStorage.getItem("user_id"), localStorage.getItem("token"))
       .then((result) => {
         handleResponse(result);
         setData(result.data);
@@ -79,7 +79,7 @@ export default function Boards() {
   }, []);
   
   const refreshBoards  = () => {
-    fetchBoards(localStorage.getItem("token"))
+    fetchBoards(localStorage.getItem("user_id"), localStorage.getItem("token"))
       .then((result) => {
         handleResponse(result);
         setData(result.data);

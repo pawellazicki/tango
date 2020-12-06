@@ -11,7 +11,7 @@ async function createBoard(request) {
         team_name: request.payload.team_name
     }
 
-    boardDAO.save(board);
+    boardDAO.save(board, request.params.user_id);
 
     return {
         "code": "200",

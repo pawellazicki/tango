@@ -5,12 +5,13 @@ const BoardDAO = class BoardDAO {
         this.dbConnection = dbConnection;
     }
 
-    async save(board) {
+    async save(board, user_id) {
         let values = [
             board.title,
-            board.team_name
+            board.team_name,
+            user_id
         ];
-        let sql = 'INSERT INTO BOARD (TITLE, TEAM_NAME) VALUES (?, ?)'
+        let sql = 'INSERT INTO BOARD (TITLE, TEAM_NAME, USER_ID) VALUES (?, ?, ?)'
 
         return await new Promise((resolve, reject) => {
             this.dbConnection.query({

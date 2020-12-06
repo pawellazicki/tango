@@ -8,7 +8,10 @@ async function checkCreds(request) {
     userSchema = await userDAO.find(request.payload.username);
 
     if(bcrypt.compareSync(request.payload.password, userSchema.password)) {
-        return createToken(request.payload.username);
+        return {
+            "token": createToken(request.payload.username),
+            "user_id": userSchema.id
+        }
     } 
 
     return '';
