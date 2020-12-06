@@ -60,7 +60,8 @@ const init = async () => {
                             resolve(results);
                         })
                 }); 
-
+                
+                connection.destroy();
                 return userObj;
             });
 
