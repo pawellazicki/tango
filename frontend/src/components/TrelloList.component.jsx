@@ -74,11 +74,10 @@ export default function TrelloList({ boardId }) {
 
   useEffect(() => {
     fetchLists().then((response) => {
-      console.log(response);
       setLoading(false);
       setTrelloLists(mapResponseToList(response.data));
     });
-  }, []);
+  }, [JSON.stringify(trelloLists)]);
 
   return (
     <div>
