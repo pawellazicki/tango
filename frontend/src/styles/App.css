@@ -1,9 +1,9 @@
-.App{
+.App {
   height: 100vh;
   background-color: #282c34;
 }
 
-.topnav{
+.topnav {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -19,9 +19,6 @@
   text-decoration: none;
 }
 
-
 .right {
   float: right;
 }
-
-

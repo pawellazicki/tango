@@ -9,3 +9,23 @@
 .CustomButton:hover {
   background-color: #201c06 !important;
 }
+
+.NewListButton {
+  margin-top: 5px !important;
+  background-color: #c5aa10 !important;
+  margin: auto !important;
+}
+
+.NewListButton:hover {
+  background-color: #201c06 !important;
+}
+
+.DeleteListButton {
+  margin-top: 5px !important;
+  background-color: inherit !important;
+  margin: auto !important;
+}
+
+.DeleteListButton:hover {
+  background-color: #e43408 !important;
+}

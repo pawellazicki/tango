@@ -1,0 +1,47 @@
+.DeleteCardButton {
+  margin-top: 5px !important;
+  background-color: inherit !important;
+  margin-left: auto !important;
+}
+
+.DeleteCardButton:hover {
+  background-color: #e43408 !important;
+}
+
+.CardList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.TrelloCard {
+  width: 200px;
+  height: 130px;
+  margin-left: 1%;
+  margin-right: 5px;
+  margin-top: 5px;
+  background-color: beige !important;
+}
+
+.AddCardButton {
+  background-color: inherit !important;
+}
+
+.AddCardButton:hover {
+  background-color: rgba(70, 67, 67, 0.644) !important;
+}
+
+.DialogButton {
+  background-color: black !important;
+}
+
+.DialogButton:hover {
+  background-color: CustomDialog !important;
+}
+
+.CustomDialog {
+  background-color: rgba(70, 67, 67, 0.644) !important;
+}
+
+.createLabel {
+  color: black;
+}
