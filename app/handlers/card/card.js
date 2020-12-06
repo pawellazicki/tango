@@ -11,7 +11,7 @@ async function getCards(request) {
     let userBoardsAccess = await boardDao.findByUserId(request.auth.credentials.id);
     let requestingList = await listDao.findById(request.params.listID);
     if(requestingList == null || requestingList.BoardID == null) {
-        return { message: "List dosent exist" };
+        return { message: "List doesnt exist" };
     }
     let boardIdOfRequestingListId = requestingList.BoardID;
     if(!utils.checkIfUserHasAccessToBoard(userBoardsAccess, boardIdOfRequestingListId)) {
@@ -29,7 +29,7 @@ async function addCard(request) {
     let userBoardsAccess = await boardDao.findByUserId(request.auth.credentials.id);
     let requestingList = await listDao.findById(request.payload.listID);
     if(requestingList == null || requestingList.BoardID == null) {
-        return { message: "List dosent exist" };
+        return { message: "List doesnt exist" };
     }
     let boardIdOfRequestingListId = requestingList.BoardID;
     if(!utils.checkIfUserHasAccessToBoard(userBoardsAccess, boardIdOfRequestingListId)) {
@@ -45,5 +45,30 @@ async function addCard(request) {
     return { message: await cardDao.save(card) };
 }
 
+async function deleteCard(request) {
+    let cardDao = new CardDAO(request.app.db);
+    let listDao = new ListDAO(request.app.db);
+    let boardDao = new BoardDAO(request.app.db);
+
+    let card = await cardDao.findById(request.payload.cardID);
+    if(card == null) {
+        return { message: "Card doesnt exist" };
+    }
+
+    let requestingList = await listDao.findById(card.ListID);
+    let userBoardsAccess = await boardDao.findByUserId(request.auth.credentials.id);
+    if(requestingList == null || requestingList.BoardID == null) {
+        return { message: "List doesnt exist" };
+    }
+
+    let boardIdOfRequestingListId = requestingList.BoardID;
+    if(!utils.checkIfUserHasAccessToBoard(userBoardsAccess, boardIdOfRequestingListId)) {
+        return { message: "User has no access to the card." };
+    }
+
+    return { message: await cardDao.remove(request.payload.cardID) };
+}
+
 module.exports.getCards = getCards;
 module.exports.addCard = addCard;
+module.exports.deleteCard = deleteCard;
