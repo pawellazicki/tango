@@ -51,7 +51,7 @@ export default function TrelloList({ boardId }) {
   };
 
   const deleteTrelloList = (id) => {
-    deleteList(id, localStorage.getItem("token"));
+    deleteList(id, localStorage.getItem("token")).then(setLoading(true));
   };
 
   const refreshLists = () => {
