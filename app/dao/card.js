@@ -25,6 +25,36 @@ const CardDAO = class CardDAO {
             })
         });
     }
+
+    async save(card) {
+        let values = [
+            card.listID,
+            card.cardName,
+            card.deadline,
+        ]
+
+        let sql = 'INSERT INTO Card () VALUES ()'
+        try {
+            await new Promise((resolve, reject) => {
+                this.dbConnection.query({
+                    sql: sql,
+                    values: values,
+                },
+                function (err, results) {
+                    if (err) {
+                        reject(err);
+                    }
+    
+                    resolve(results);
+                })
+            });
+        } catch (error) {
+            console.error(error);
+            return error.code + ": check server log";
+        }
+
+        return "Correctly patched"
+    }
 }
 
 module.exports = CardDAO;
