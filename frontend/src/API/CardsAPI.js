@@ -40,3 +40,18 @@ export const deleteCard = (cardID, token) => {
         }
     })
 }
+
+export const editCard = (cardID, newCardName, token) => {
+    return Axios({
+        url: '/cards/edit',
+        method: 'PATCH',
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+        },
+        data: {
+            cardID,
+            newCardName
+        }
+    })
+}
