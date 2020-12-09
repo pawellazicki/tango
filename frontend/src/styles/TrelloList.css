@@ -29,3 +29,20 @@
 .DeleteListButton:hover {
   background-color: #e43408 !important;
 }
+
+.ListTitle {
+  background-color: transparent;
+  border: none;
+  font-size: 1.75vw;
+  color: aliceblue;
+}
+
+.ListTitle:active {
+  outline: none;
+  border: none;
+}
+
+.ListTitle:focus {
+  outline: none;
+  border: none;
+}

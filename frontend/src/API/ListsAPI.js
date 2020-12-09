@@ -39,3 +39,18 @@ export const createList = (title, boardID, token) => {
         }
     })
 }
+
+export const updateList = (listID, newTitle, token) => {
+    return Axios({
+        url: '/lists/edit',
+        method: 'PATCH',
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+        },
+        data: {
+            listID,
+            newTitle
+        }
+    })
+}

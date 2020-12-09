@@ -1,16 +1,11 @@
 import React, { useEffect } from "react";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
 import "../styles/TrelloList.css";
-import { getLists, deleteList, createList } from "../API/ListsAPI";
+import { getLists, deleteList, createList, updateList } from "../API/ListsAPI";
 import Loading from "../components/Loading.component";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import TrelloCards from "../containers/TrelloCards.container";
 import CreateList from "../components/CreateList.component";
+import ListComponent from "../components/ListComponent.component"
 
 export default function TrelloList({ boardId }) {
   const [trelloLists, setTrelloLists] = React.useState([]);
@@ -21,24 +16,10 @@ export default function TrelloList({ boardId }) {
 
   const prepareListItems = () => {
     return trelloLists.map((list) => (
-      <div>
-        <ListItem>
-          <ListItemText primary={list.listName} />
-          <ListItemSecondaryAction>
-            <IconButton
-              className="DeleteListButton"
-              edge="end"
-              aria-label="delete"
-              onClick={() => deleteTrelloList(list.listID)}
-            >
-              <DeleteForeverIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </ListItem>
-        <TrelloCards listID={list.listID} />
-      </div>
+      <ListComponent list={list} deleteTrelloList={deleteTrelloList} updateTrelloList={updateTrelloList}></ListComponent>
     ));
   };
+
 
   const closeCreateListDialog = () => {
     setCreateListDialogOpen(false);
@@ -59,6 +40,10 @@ export default function TrelloList({ boardId }) {
         setTrelloLists(mapResponseToList(response.data))
       )
     );
+  };
+  
+  const updateTrelloList = (list) => {
+    updateList(list.listID, list.listName,  localStorage.getItem("token"))
   };
 
   const fetchLists = () => {
