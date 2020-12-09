@@ -29,7 +29,6 @@ export default function RegisterForm() {
   };
 
   const handleResponse = (response) => {
-    console.log(response.data);
     if (response.data.code === "200") {
       approveRegistration();
     } else {
