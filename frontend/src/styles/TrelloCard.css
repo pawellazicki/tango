@@ -1,7 +1,19 @@
-.DeleteCardButton {
-  margin-top: 5px !important;
+.buttonsWrapper {
+  display: flex;
+}
+
+.EditCardButton {
+  margin: auto !important;
   background-color: inherit !important;
-  margin-left: auto !important;
+}
+
+.EditCardButton:hover {
+  background-color: #aaaaaa !important;
+}
+
+.DeleteCardButton {
+  margin: auto !important;
+  background-color: inherit !important;
 }
 
 .DeleteCardButton:hover {

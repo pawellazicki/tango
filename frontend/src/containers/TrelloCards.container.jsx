@@ -5,10 +5,14 @@ import "../styles/TrelloCard.css";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CreateCard from "../components/CreateCard.comopnent";
 import { getCardsForList, createCard, deleteCard } from "../API/CardsAPI";
+import CardView from "../components/cardView.component";
+import { connectUserWithBoard } from "../API/UserBoardEnrollmentsAPI";
 
 export default function TrelloCards({ listID }) {
   const [newCardDialogOpen, setNewCardDialogOpen] = React.useState(false);
+  const [cardViewDialogOpen, setCardViewDialogOpen] = React.useState(false);
   const [cards, setCards] = React.useState([]);
+  const [currentCard, setCurrentCard] = React.useState([]);
 
   const fetchCards = () => {
     return getCardsForList(listID, localStorage.getItem("token"));
@@ -20,6 +24,7 @@ export default function TrelloCards({ listID }) {
         id={card.id}
         task={card.task}
         endDate={card.endDate}
+        onEdit={(id) => onCardEdit(id)}
         onDelete={(id) => onCardDelete(id)}
       />
     ));
@@ -27,6 +32,24 @@ export default function TrelloCards({ listID }) {
 
   const closeNewCardDialog = () => {
     setNewCardDialogOpen(false);
+  };
+
+  const closeCardViewDialog = () => {
+    setCardViewDialogOpen(false);
+  };
+
+  const onCardEdit = (id) => {
+    setCardViewDialogOpen(true)
+    setCurrentCard(cards.filter(card => card.id == id)[0])
+  }
+  
+  const saveCard = (card_id) => {
+    console.log(card_id)
+    connectUserWithBoard(5, 1, localStorage.getItem("token")).then((response) => {
+      console.log(response)
+      setCardViewDialogOpen(false)
+      }
+    );
   };
 
   const onCardDelete = (id) => {
@@ -75,8 +98,13 @@ export default function TrelloCards({ listID }) {
       <CreateCard
         isOpen={newCardDialogOpen}
         handleClose={closeNewCardDialog}
-        handleAdd={addNewCard}
-      />
+        handleAdd={addNewCard} />
+        
+      <CardView
+        isOpen={cardViewDialogOpen}
+        cardObject = {currentCard}
+        handleClose={closeCardViewDialog}
+        handleSave={saveCard} />
     </div>
   );
 }

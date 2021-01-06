@@ -38,6 +38,7 @@ CREATE TABLE USER
         ("trello", "$2b$10$Noq34eIWcux.KdAbkQ3S/uokkAbPcUWEcKYpC8jvqwNunl864VBx2", "trello@admin.com");
 
 
+
     DROP TABLE IF EXISTS BOARD;
     CREATE TABLE BOARD
     (
@@ -61,6 +62,23 @@ CREATE TABLE USER
             ('web app', 'tango', 1),
             ('mobile app', 'delta', 2),
             ('calculator', 'best team', 2);
+            
+	DROP TABLE IF EXISTS USERBOARDENROLLMENTS;
+	CREATE TABLE USERBOARDENROLLMENTS
+    (
+        ID INT NOT NULL AUTO_INCREMENT,
+        USER_ID INT UNSIGNED NOT NULL,
+        BOARD_ID INT NOT NULL,
+        FOREIGN KEY
+        (USER_ID) REFERENCES USER
+        (id),
+        FOREIGN KEY
+        (BOARD_ID) REFERENCES BOARD
+        (ID),
+        PRIMARY KEY
+        (ID)
+	);
+        
 
     DROP TABLE IF EXISTS TrelloList;
     CREATE TABLE TrelloList(
