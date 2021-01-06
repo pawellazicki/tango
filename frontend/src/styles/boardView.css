@@ -10,5 +10,5 @@
 .usersWrapper {
   width: 15%;
   height: 100vh;
-  background-color: red;
+  border-left: 1px white solid;
 }

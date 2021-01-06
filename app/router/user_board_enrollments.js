@@ -7,9 +7,16 @@ module.exports = [
         method: 'POST',
         path: '/user_board_enrollments/insert',
         handler: async (request, h) => {
-            console.log(request)
-            const response1 = await handlers.createUserBoardEnrollment(request);
-            return h.response(response1);
+            const response = await handlers.createUserBoardEnrollment(request);
+            return h.response(response);
+        }
+    },
+    {
+        method: 'GET',
+        path: '/user_board_enrollments/{board_id}',
+        handler: async (request, h) => {
+            const response = await handlers.getBoardUsers(request);
+            return h.response(response);
         }
     }
 ]

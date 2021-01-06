@@ -1,0 +1,37 @@
+.userContainer {
+  width: 80%;
+  background-color: wheat;
+  margin: 5px auto;
+}
+
+.userName {
+  color: #000000;
+  font-size: 1.4vw;
+  padding: 5px;
+  text-align: center;
+  border-bottom: 1px black solid;
+}
+
+.addUser {
+  font-size: 1.4vw;
+  background-color: silver;
+  margin: 20px auto 0;
+}
+
+.allUsers {
+  margin-top: 5px;
+  background-color: wheat;
+}
+
+.userNameAllUsers {
+  color: #000000;
+  font-size: 1.4vw;
+  padding: 5px;
+  text-align: center;
+  border-bottom: 1px black solid;
+}
+
+.userNameAllUsers:hover {
+  color: blue;
+  cursor: pointer;
+}

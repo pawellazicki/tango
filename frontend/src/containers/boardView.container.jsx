@@ -5,6 +5,7 @@ import { getBoard, updateBoard } from "../API/BoardsAPI";
 import BoardTitle from "../components/boardTitle.component";
 import TrelloList from "../components/TrelloList.component";
 import "../styles/boardView.css";
+import SideUsers from "../components/SideUsers.component";
 
 export default function BoardView(props) {
   const [board, setBoard] = useState([]);
@@ -41,7 +42,7 @@ export default function BoardView(props) {
           <TrelloList boardId={board_id} />
         </div>
         <div className="usersWrapper">
-          <p>users here</p>
+          <SideUsers board_id={board_id}/>
         </div>
       </div>
     </div>

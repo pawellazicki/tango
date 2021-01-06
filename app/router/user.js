@@ -48,6 +48,24 @@ module.exports = [
                 })
             }
         }
+    },
+    {
+        method: 'GET',
+        path: '/users',
+        handler: async (request, h) => {
+            return await getUsers(request);
+        }
     }
 ]
 
+
+function getUsers(request) {
+    return new Promise((resolve, reject) => {
+        request.app.db.query(`SELECT * FROM USER`, [], function (err, results) {
+            if (err) {
+                return reject(error)
+            }
+            return resolve(results);
+        })
+    })
+}

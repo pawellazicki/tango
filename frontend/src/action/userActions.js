@@ -25,6 +25,17 @@ export const fetchUser = (username, password) => {
     })
 }
 
+export const getUsers = async (token) => {
+    return Axios.get(`/users`,
+      {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + token,
+          "Content-type": "application/json"
+        }
+      });
+  }
+
 export const signUserUp = (username, password, password_2, email,  callback) => {
     return Axios({
         url: '/auth/signup',

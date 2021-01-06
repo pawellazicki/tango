@@ -26,88 +26,26 @@ const user_board_DAO = class user_board_DAO {
                 })
         });
     }
-
-    // async remove(id) {
-    //     let values = [
-    //         id
-    //     ]
-    //     let sql = 'DELETE FROM BOARD WHERE ID = ?'
-    //     return await new Promise((resolve, reject) => {
-    //         this.dbConnection.query({
-    //             sql: sql,
-    //             values: values,
-    //         },
-    //             function (err, results) {
-    //                 if (err) {
-    //                     resolve(results);
-    //                 }
-
-    //                 resolve(results);
-    //             })
-    //     });
-    // }
-    //
-    // async get(id) {
-    //     let values = [
-    //         id
-    //     ]
-    //     let sql = 'SELECT * FROM board WHERE ID = ?'
-    //     return await new Promise((resolve, reject) => {
-    //         this.dbConnection.query({
-    //             sql: sql,
-    //             values: values,
-    //         },
-    //             function (err, results) {
-    //                 if (err) {
-    //                     reject(results);
-    //                 }
-
-    //                 resolve(results);
-    //             })
-    //     });
-    // }
     
-    // async update(board) {
-    //     let values = [
-    //         board.title,
-    //         board.team_name,
-    //         board.id
-    //     ];
-    //     let sql = 'UPDATE board SET TITLE = ?, TEAM_NAME = ? WHERE ID = ?'
-    //     return await new Promise((resolve, reject) => {
-    //         this.dbConnection.query({
-    //             sql: sql,
-    //             values: values,
-    //         },
-    //             function (err, results) {
-    //                 if (err) {
-    //                     reject(results);
-    //                 }
+    async getBoardUsers(board_id) {
+        let values = [
+            board_id
+        ]
+        let sql = 'select * from user U join userboardenrollments E on U.id = E.user_id  AND E.board_id = ?'
+        return await new Promise((resolve, reject) => {
+            this.dbConnection.query({
+                sql: sql,
+                values: values,
+            },
+                function (err, results) {
+                    if (err) {
+                        reject(results);
+                    }
 
-    //                 resolve(results);
-    //             })
-    //     });
-    // }
-
-    // async findByUserId(userId) {
-    //     let values = [
-    //         userId
-    //     ];
-    //     let sql = 'SELECT * FROM BOARD WHERE USER_ID = ?';
-    //     return await new Promise((resolve, reject) => {
-    //         this.dbConnection.query({
-    //             sql: sql,
-    //             values: values,
-    //         },
-    //             function (err, results) {
-    //                 if (err) {
-    //                     reject(results);
-    //                 }
-
-    //                 resolve(results);
-    //             })
-    //     });
-    // }
+                    resolve(results);
+                })
+        });
+    }
 }
 
 module.exports = user_board_DAO;

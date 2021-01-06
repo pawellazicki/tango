@@ -38,23 +38,6 @@ export default function CardView({
         <DialogTitle id="form-dialog-title">{cardObject.task}</DialogTitle>
         <label className="createLabel">choose labels</label>
         <DialogContent style={{ overflowY: "visible" }}>
-          {/* <label className="createLabel">Task</label>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="task"
-            type="text"
-            onChange={(newValue) => setTitle(newValue.target.value)}
-            fullWidth
-          />
-          <label className="createLabel">End date</label>
-          <TextField
-            margin="dense"
-            id="timestamp"
-            type="date"
-            onChange={(newValue) => setEndDate(newValue.target.value)}
-            fullWidth
-          /> */}
           <ColorPicker onColorChange={onColorChange} value={pickedColors} />
         </DialogContent>
         <DialogActions>
