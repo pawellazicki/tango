@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { getBoard, updateBoard } from "../API/BoardsAPI";
 import BoardTitle from "../components/boardTitle.component";
 import TrelloList from "../components/TrelloList.component";
+import "../styles/boardView.css";
 
 export default function BoardView(props) {
   const [board, setBoard] = useState([]);
@@ -34,8 +35,15 @@ export default function BoardView(props) {
 
   return (
     <div>
-      <BoardTitle boardTitle={board.TITLE} setBoardTitle={setBoardTitle} />
-      <TrelloList boardId={board_id} />
+      <div className="mainViewWrapper">
+        <div className="listsWrapper">
+          <BoardTitle boardTitle={board.TITLE} setBoardTitle={setBoardTitle} />
+          <TrelloList boardId={board_id} />
+        </div>
+        <div className="usersWrapper">
+          <p>users here</p>
+        </div>
+      </div>
     </div>
   );
 }

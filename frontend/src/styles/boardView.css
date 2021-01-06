@@ -1,0 +1,14 @@
+.listsWrapper {
+  width: 85%;
+  margin: 0;
+}
+.mainViewWrapper {
+  width: 100%;
+  display: flex;
+}
+
+.usersWrapper {
+  width: 15%;
+  height: 100vh;
+  background-color: red;
+}
