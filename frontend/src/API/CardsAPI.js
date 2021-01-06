@@ -55,3 +55,18 @@ export const editCard = (cardID, newCardName, token) => {
         }
     })
 }
+
+export const updateLabels = (cardID, colors, token) => {
+    return Axios({
+        url: '/cards/updateLabel',
+        method: 'PATCH',
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+        },
+        data: {
+            cardID,
+            colors
+        }
+    })
+}

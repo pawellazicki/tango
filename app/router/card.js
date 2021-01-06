@@ -20,7 +20,7 @@ module.exports = [
                 var dateNow = new Date();
                 date = new Date(request.payload.deadline);
 
-                if(dateNow.getTime() > date.getTime()) {
+                if (dateNow.getTime() > date.getTime()) {
                     return { message: "Deadline is in the past" };
                 }
 
@@ -70,6 +70,22 @@ module.exports = [
                 payload: Joi.object({
                     cardID: Joi.number().required(),
                     newCardName: Joi.string().min(1).max(140).required(),
+                })
+            }
+        }
+    },
+    {
+        method: 'PATCH',
+        path: '/cards/updateLabel',
+        handler: async (request, h) => {
+            const response = await handlers.updateLabels(request);
+            return h.response(response);
+        },
+        options: {
+            validate: {
+                payload: Joi.object({
+                    cardID: Joi.number().required(),
+                    colors: Joi.string().max(10).allow(""),
                 })
             }
         }

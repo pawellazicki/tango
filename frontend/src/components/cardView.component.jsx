@@ -6,22 +6,39 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import "../styles/TrelloCard.css";
+import ColorPicker from "./ColorPicker.component";
 
-export default function CardView({ isOpen, cardObject, handleClose, handleSave }) {
+export default function CardView({
+  isOpen,
+  cardObject,
+  handleClose,
+  handleSave,
+}) {
   const [title, setTitle] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
+  const [pickedColors, setPickedColors] = React.useState();
+
+  const onColorChange = (colors) => {
+    setPickedColors(colors);
+  };
+
+  React.useEffect(() => {
+    console.log(cardObject);
+  }, []);
 
   return (
     <div>
       <Dialog
+        PaperProps={{ style: { overflowY: "visible" } }}
         fullWidth={true}
         open={isOpen}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">{cardObject.task}</DialogTitle>
-        {/* <DialogContent>
-          <label className="createLabel">Task</label>
+        <label className="createLabel">choose labels</label>
+        <DialogContent style={{ overflowY: "visible" }}>
+          {/* <label className="createLabel">Task</label>
           <TextField
             autoFocus
             margin="dense"
@@ -37,8 +54,9 @@ export default function CardView({ isOpen, cardObject, handleClose, handleSave }
             type="date"
             onChange={(newValue) => setEndDate(newValue.target.value)}
             fullWidth
-          />
-        </DialogContent> */}
+          /> */}
+          <ColorPicker onColorChange={onColorChange} value={pickedColors} />
+        </DialogContent>
         <DialogActions>
           <Button
             className="DialogButton"
@@ -49,7 +67,7 @@ export default function CardView({ isOpen, cardObject, handleClose, handleSave }
           </Button>
           <Button
             className="DialogButton"
-            onClick={() => handleSave(cardObject.id)}
+            onClick={() => handleSave(cardObject.id, pickedColors)}
             color="primary"
           >
             Save

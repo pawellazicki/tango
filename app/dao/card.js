@@ -15,14 +15,14 @@ const CardDAO = class CardDAO {
                 sql: sql,
                 values: values,
             },
-            function (err, results) {
-                if (err) {
-                    reject(err);
-                }
-                
-                results = JSON.parse(JSON.stringify(results));
-                resolve(results);
-            })
+                function (err, results) {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    results = JSON.parse(JSON.stringify(results));
+                    resolve(results);
+                })
         });
     }
 
@@ -40,13 +40,13 @@ const CardDAO = class CardDAO {
                     sql: sql,
                     values: values,
                 },
-                function (err, results) {
-                    if (err) {
-                        reject(err);
-                    }
-    
-                    resolve(results);
-                })
+                    function (err, results) {
+                        if (err) {
+                            reject(err);
+                        }
+
+                        resolve(results);
+                    })
             });
         } catch (error) {
             console.error(error);
@@ -67,14 +67,14 @@ const CardDAO = class CardDAO {
                 sql: sql,
                 values: values,
             },
-            function (err, results) {
-                if (err) {
-                    reject(err);
-                }
-                
-                results = JSON.parse(JSON.stringify(results));
-                resolve(results[0]);
-            })
+                function (err, results) {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    results = JSON.parse(JSON.stringify(results));
+                    resolve(results[0]);
+                })
         });
     }
 
@@ -90,13 +90,13 @@ const CardDAO = class CardDAO {
                     sql: sql,
                     values: values,
                 },
-                function (err, results) {
-                    if (err) {
-                        reject(err);
-                    }
-    
-                    resolve(results);
-                })
+                    function (err, results) {
+                        if (err) {
+                            reject(err);
+                        }
+
+                        resolve(results);
+                    })
             });
         } catch (error) {
             console.error(error);
@@ -119,13 +119,13 @@ const CardDAO = class CardDAO {
                     sql: sql,
                     values: values,
                 },
-                function (err, results) {
-                    if (err) {
-                        reject(err);
-                    }
-    
-                    resolve(results);
-                })
+                    function (err, results) {
+                        if (err) {
+                            reject(err);
+                        }
+
+                        resolve(results);
+                    })
             });
         } catch (error) {
             console.error(error);
@@ -133,6 +133,36 @@ const CardDAO = class CardDAO {
         }
 
         return "Card's name changed";
+    }
+
+    async updateLabels(cardID, labels) {
+        let values = [
+            labels,
+            cardID
+        ]
+
+        let sql = 'UPDATE Card SET Label = ? WHERE CardID = ?'
+
+        try {
+            await new Promise((resolve, reject) => {
+                this.dbConnection.query({
+                    sql: sql,
+                    values: values,
+                },
+                    function (err, results) {
+                        if (err) {
+                            reject(err);
+                        }
+
+                        resolve(results);
+                    })
+            });
+        } catch (error) {
+            console.error(error);
+            return error.code + ": check server log";
+        }
+
+        return "Card's labels changed to " + labels;
     }
 }
 
