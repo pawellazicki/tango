@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import Board from "../components/Board.component";
 import Loading from "../components/Loading.component";
 import "../styles/boards.container.css";
-import { fetchBoards, createBoard, deleteBoard } from "../API/BoardsAPI";
+import { fetchBoards, createBoard, deleteBoard, getBoard } from "../API/BoardsAPI";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginSuccess, logUserOut } from "../action/userActions";
 import { useSelector } from "react-redux";
 import TitleWithButton from "../components/TitleWithButton.component";
 import NewBoard from "../components/NewBoard.component";
+import { getUserBoards } from "../API/UserBoardEnrollmentsAPI";
 
 export default function Boards() {
   const userReducer = useSelector((state) => state.userReducer);
@@ -64,12 +65,21 @@ export default function Boards() {
   }
 
   useEffect(() => {
-    fetchBoards(localStorage.getItem("user_id"), localStorage.getItem("token"))
+    let boards = []
+    getUserBoards(localStorage.getItem("user_id"), localStorage.getItem("token"))
       .then((result) => {
-        handleResponse(result);
-        setData(result.data);
+        result.data.map(enrollment => {
+          getBoard(enrollment.BOARD_ID, localStorage.getItem("token")).then(result => {
+            boards.push(result.data[0])
+          })
+        })
       })
       .then(() => {
+        fetchBoards(localStorage.getItem("user_id"), localStorage.getItem("token"))
+        .then(result => {
+          result.data.map(board => boards.push(board))
+          setData(boards);
+        })
         setLoading(false);
       })
       .catch(() => {

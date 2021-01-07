@@ -20,5 +20,11 @@ async function getBoardUsers(request) {
     return userBoardDAO.getBoardUsers(request.params.board_id)
 }
 
+async function getUserBoards(request) {
+    userBoardDAO = new user_board_DAO(request.app.db);
+    return userBoardDAO.getUserBoards(request.params.user_id)
+}
+
 module.exports.createUserBoardEnrollment = createUserBoardEnrollment;
 module.exports.getBoardUsers = getBoardUsers;
+module.exports.getUserBoards = getUserBoards;

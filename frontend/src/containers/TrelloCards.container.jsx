@@ -96,6 +96,9 @@ export default function TrelloCards({ listID }) {
   };
 
   const mapResponseToCard = (cards) => {
+    console.log(cards)
+    if(cards.message == "")
+      return
     return cards.map((card) => ({
       id: card.CardID,
       task: card.CardName,

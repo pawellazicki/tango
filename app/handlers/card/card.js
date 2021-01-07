@@ -14,9 +14,9 @@ async function getCards(request) {
         return { message: "List dosent exist" };
     }
     let boardIdOfRequestingListId = requestingList.BoardID;
-    if (!utils.checkIfUserHasAccessToBoard(userBoardsAccess, boardIdOfRequestingListId)) {
-        return { message: "User has no access to the board." };
-    }
+    // if (!utils.checkIfUserHasAccessToBoard(userBoardsAccess, boardIdOfRequestingListId)) {
+    //     return { message: "User has no access to the board." };
+    // }
 
     return cardDao.findAllByListId(request.params.listID);
 }

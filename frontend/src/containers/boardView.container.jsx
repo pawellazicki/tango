@@ -6,6 +6,7 @@ import BoardTitle from "../components/boardTitle.component";
 import TrelloList from "../components/TrelloList.component";
 import "../styles/boardView.css";
 import SideUsers from "../components/SideUsers.component";
+import { connectUserWithBoard } from "../API/UserBoardEnrollmentsAPI";
 
 export default function BoardView(props) {
   const [board, setBoard] = useState([]);
@@ -13,8 +14,20 @@ export default function BoardView(props) {
   const board_id = props.match.params.id;
 
   useEffect(() => {
+    let boardUser_id = 0
     getBoard(board_id, localStorage.getItem("token")).then((result) => {
-      if (result.status == "200") setBoard(result.data[0]);
+      if (result.status == "200") {
+        setBoard(result.data[0]);
+        boardUser_id = result.data[0].USER_ID
+      }
+    }).then( () => {
+      console.log(localStorage.getItem("user_id") != boardUser_id)
+      if(localStorage.getItem("user_id") != boardUser_id) {
+      connectUserWithBoard(
+        localStorage.getItem("user_id"), 
+        board_id,
+        localStorage.getItem("token")).then(console.log("aaa"));
+      }
     });
   }, []);
 
