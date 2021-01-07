@@ -6,7 +6,7 @@ import BoardTitle from "../components/boardTitle.component";
 import TrelloList from "../components/TrelloList.component";
 import "../styles/boardView.css";
 import SideUsers from "../components/SideUsers.component";
-import { connectUserWithBoard } from "../API/UserBoardEnrollmentsAPI";
+import { connectUserWithBoard, getUserBoards } from "../API/UserBoardEnrollmentsAPI";
 
 export default function BoardView(props) {
   const [board, setBoard] = useState([]);
@@ -21,13 +21,23 @@ export default function BoardView(props) {
         boardUser_id = result.data[0].USER_ID
       }
     }).then( () => {
-      console.log(localStorage.getItem("user_id") != boardUser_id)
-      if(localStorage.getItem("user_id") != boardUser_id) {
-      connectUserWithBoard(
-        localStorage.getItem("user_id"), 
-        board_id,
-        localStorage.getItem("token")).then(console.log("aaa"));
-      }
+      getUserBoards(localStorage.getItem("user_id"), localStorage.getItem("token"))
+        .then((result) => {
+        let found = false
+        result.data.map(enrollment => {
+          if(enrollment.BOARD_ID == board_id) {
+            console.log(enrollment)
+            found = true
+          }
+        })
+        
+        if(localStorage.getItem("user_id") != boardUser_id && !found) {
+          connectUserWithBoard(
+            localStorage.getItem("user_id"), 
+            board_id,
+            localStorage.getItem("token")).then(console.log("aaa"));
+          }
+      })
     });
   }, []);
 
