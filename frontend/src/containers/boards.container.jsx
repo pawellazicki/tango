@@ -77,7 +77,7 @@ export default function Boards() {
       .then(() => {
         fetchBoards(localStorage.getItem("user_id"), localStorage.getItem("token"))
         .then(result => {
-          result.data.map(board => boards.push(board))
+          //result.data.map(board => boards.push(board))
           setData(boards);
         })
         setLoading(false);

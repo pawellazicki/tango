@@ -31,7 +31,7 @@ export default function BoardView(props) {
           }
         })
         
-        if(localStorage.getItem("user_id") != boardUser_id && !found) {
+        if(!found) {
           connectUserWithBoard(
             localStorage.getItem("user_id"), 
             board_id,
