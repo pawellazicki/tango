@@ -25,6 +25,7 @@ const SideUsers = ({board_id}) => {
     })
     if(!found) {
       connectUserWithBoard(user_id, board_id, localStorage.getItem("token"));
+      boardUsers.push(allUsers.filter(user => user.id === user_id))
       setAddUserFlag(false)
     }
   }
@@ -42,9 +43,15 @@ const SideUsers = ({board_id}) => {
 
         {addUserFlag ?
           <div className="allUsers">
-            {allUsers? allUsers.map(user => (
-            <p className="userNameAllUsers" onClick={() => addUser(user.id)}>{user.username}</p>
-            ))
+            {allUsers? allUsers.map(user => {
+              let found = false;
+              boardUsers.map(boardUser => {
+                if(boardUser.id === user.id)
+                  found = true
+              })
+              if(!found) 
+                return <p className="userNameAllUsers" onClick={() => addUser(user.id)}>{user.username}</p>
+          })
           : null}
           </div>
         : null
