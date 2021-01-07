@@ -11,9 +11,9 @@ async function addList(request) {
     let boardDao = new BoardDAO(request.app.db);
 
     let boards = await boardDao.findByUserId(request.auth.credentials.id);
-    if(!checkIfUserHasAccessToBoard(boards, request.payload.boardID)) {
-        return "User has no access to the board.";
-    }
+    //if(!checkIfUserHasAccessToBoard(boards, request.payload.boardID)) {
+   //     return "User has no access to the board.";
+    //}
 
     let message = await listDao.addListToBoard(request.payload.boardID, request.payload.title);
     return message;

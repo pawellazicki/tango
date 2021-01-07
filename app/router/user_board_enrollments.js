@@ -13,9 +13,17 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/user_board_enrollments/{board_id}',
+        path: '/user_board_enrollments/users/{board_id}',
         handler: async (request, h) => {
             const response = await handlers.getBoardUsers(request);
+            return h.response(response);
+        }
+    },
+    {
+        method: 'GET',
+        path: '/user_board_enrollments/boards/{user_id}',
+        handler: async (request, h) => {
+            const response = await handlers.getUserBoards(request);
             return h.response(response);
         }
     }
