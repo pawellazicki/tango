@@ -54,7 +54,10 @@ export default function TrelloCards({ listID }) {
       card_id,
       parseColors(colors),
       localStorage.getItem("token")
-    ).then(closeCardViewDialog());
+    ).then(() => {
+      closeCardViewDialog();
+      window.location.reload();
+    });
 
     // connectUserWithBoard(5, 1, localStorage.getItem("token")).then(
     //   (response) => {
