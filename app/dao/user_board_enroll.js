@@ -66,6 +66,27 @@ const user_board_DAO = class user_board_DAO {
                 })
         });
     }
+    
+    async removeEnroll(user_id, board_id) {
+        let values = [
+            user_id,
+            board_id
+        ]
+        let sql = 'delete from userboardenrollments WHERE user_id = ? and board_id = ?'
+        return await new Promise((resolve, reject) => {
+            this.dbConnection.query({
+                sql: sql,
+                values: values,
+            },
+                function (err, results) {
+                    if (err) {
+                        reject(results);
+                    }
+
+                    resolve(results);
+                })
+        });
+    }
 }
 
 module.exports = user_board_DAO;

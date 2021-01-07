@@ -25,6 +25,12 @@ async function getUserBoards(request) {
     return userBoardDAO.getUserBoards(request.params.user_id)
 }
 
+async function removeEnroll(request) {
+    userBoardDAO = new user_board_DAO(request.app.db);
+    return userBoardDAO.removeEnroll(request.payload.user_id, request.payload.board_id)
+}
+
 module.exports.createUserBoardEnrollment = createUserBoardEnrollment;
 module.exports.getBoardUsers = getBoardUsers;
 module.exports.getUserBoards = getUserBoards;
+module.exports.removeEnroll = removeEnroll;

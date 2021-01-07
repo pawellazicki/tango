@@ -9,7 +9,7 @@ import { loginSuccess, logUserOut } from "../action/userActions";
 import { useSelector } from "react-redux";
 import TitleWithButton from "../components/TitleWithButton.component";
 import NewBoard from "../components/NewBoard.component";
-import { getUserBoards } from "../API/UserBoardEnrollmentsAPI";
+import { deleteBoardEnroll, getUserBoards } from "../API/UserBoardEnrollmentsAPI";
 
 export default function Boards() {
   const userReducer = useSelector((state) => state.userReducer);
@@ -47,6 +47,9 @@ export default function Boards() {
       if(result.data.code === '200')
         refreshBoards();
     });
+    deleteBoardEnroll(localStorage.getItem("user_id"), id, localStorage.getItem("token")).then(result => {
+      console.log(result)
+    })
   };
 
   const saveBoard = () => {
@@ -65,6 +68,10 @@ export default function Boards() {
   }
 
   useEffect(() => {
+    refreshBoards()
+  }, []);
+  
+  const refreshBoards  = () => {
     let boards = []
     getUserBoards(localStorage.getItem("user_id"), localStorage.getItem("token"))
       .then((result) => {
@@ -77,7 +84,15 @@ export default function Boards() {
       .then(() => {
         fetchBoards(localStorage.getItem("user_id"), localStorage.getItem("token"))
         .then(result => {
-          //result.data.map(board => boards.push(board))
+          result.data.map(board => {
+            let found = false
+            boards.map(boardUser => {
+              if(board.BOARD_ID != boardUser.BOARD_ID)
+                found = true
+            })
+            if(!found)
+              boards.push(board)
+          })
           setData(boards);
         })
         setLoading(false);
@@ -85,15 +100,7 @@ export default function Boards() {
       .catch(() => {
         dispatch(logUserOut());
         history.push("/login");
-      });
-  }, []);
-  
-  const refreshBoards  = () => {
-    fetchBoards(localStorage.getItem("user_id"), localStorage.getItem("token"))
-      .then((result) => {
-        handleResponse(result);
-        setData(result.data);
-      });    
+      });  
   }
 
   return (

@@ -26,5 +26,13 @@ module.exports = [
             const response = await handlers.getUserBoards(request);
             return h.response(response);
         }
+    },
+    {
+        method: 'DELETE',
+        path: '/user_board_enrollments/remove',
+        handler: async (request, h) => {
+            const response1 = await handlers.removeEnroll(request);
+            return h.response(response1);
+        }
     }
 ]
